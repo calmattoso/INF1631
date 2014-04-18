@@ -3,50 +3,72 @@
 #include "Team.h"
 #include <iostream>
 #include <cmath>
-#include <vector>
 #include <cstdio>
+#include <string>
+#include "../lib/CPUTimer/CPUTimer.h"
+
+
+#define MAX_ITERATIONS 20
 
 using namespace std;
 
 Round* generateRounds(int k, Team** teams);
+void testAlgorithm(int k);
 
-int main(void)
+int main(int argc, const char * argv[])
 {
-	int k;
-	int numberOfTeams;
+	int numberOfIterations = MAX_ITERATIONS;
 
+	if (argc > 1)
+		numberOfIterations = atoi(argv[1]);
+
+	CPUTimer timer;
+	int runs = 0;
+
+	timer.start();
+
+	for (int k = 1; k <= numberOfIterations; k++)
+	{
+		CPUTimer timerPerK;
+		timerPerK.start();
+			testAlgorithm(k);
+			runs++;
+		timerPerK.stop();
+		cout << "Rounds using k=" << k << "generated in "<< timerPerK.getCPUTotalSecs() << "s." << endl;
+	}
+
+	timer.stop();
+
+	cout << "Total time: " << timer.getCPUTotalSecs() << "s" << endl;
+	cout << "Average time : " << timer.getCPUTotalSecs() / (double)runs << "s" << endl;
+
+}
+
+void testAlgorithm(int k)
+{
+	int numberOfTeams = (int)pow(2.0, k);;
 	Team** teams;
-
-	printf("Type the k amount of the 2^k teams: ");
-	scanf(" %d",&k);
-
-	numberOfTeams = (int) pow(2.0,k);
 
 	teams = new Team*[numberOfTeams];
 
 	for (int i = 0; i < numberOfTeams; i++)
 	{
-		char teamName[30];
-		//cout << "Team " << i << "'s name:" << endl;
-		printf("Team %d's name: ", i);
-		scanf(" %[^\n]", teamName);
-		
-		teams[i] = new Team(teamName);
+		teams[i] = new Team(to_string(i+1).c_str());
 	}
 
-	Round* rounds = generateRounds(k,teams);
-
+	Round* rounds = generateRounds(k, teams);
+	/*
 	cout << "Rounds generated:" << endl;
 	for (int i = 0; i < numberOfTeams - 1; i++)
-		cout << "Round " << i+1 << ": " << rounds[i] << endl;
+		cout << "Round " << i + 1 << ": " << rounds[i] << endl;
+	*/
 
 	for (int i = 0; i < numberOfTeams - 1; i++)
 		rounds[i].deleteMatches();
 	delete[] rounds;
-	for (int i = 0; i < numberOfTeams; i++) 
+	for (int i = 0; i < numberOfTeams; i++)
 		delete teams[i];
 	delete[] teams;
-
 }
 
 Round* generateRounds(int k, Team** teams)
@@ -72,7 +94,7 @@ Round* generateRounds(int k, Team** teams)
 	// Recursion Step
 	else
 	{
-		int halfTheNumberOfTeams = numberOfTeams / 2; // halfTheNumberOfTeams is an integer because numberOfTeams is always even
+		int halfTheNumberOfTeams = numberOfTeams / 2; // halfTheNumberOfTeams is an integer because numberOfTeams is even
 
 		Team** teamsFirstHalf = teams;
 		Team** teamsSecondHalf = teams + halfTheNumberOfTeams;
