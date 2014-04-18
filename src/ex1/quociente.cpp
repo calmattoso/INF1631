@@ -2,7 +2,7 @@
 
 #define MAX(a,b) ((a>b)?a:b)
 
-Quociente::Quociente( long long x , long long y ) :
+Quociente::Quociente( long x , long y ) :
   exp( x ), q( 1000 , 0 )
 {
   this->x = x;
@@ -13,7 +13,7 @@ Quociente::Quociente( long long x , long long y ) :
 }
 
 
-long long Quociente::FindFor( unsigned long long k ) 
+mpz_class Quociente::FindFor( unsigned long k ) 
 {
   
   /* Hack para deixar o algoritmo mais direto. */
@@ -63,16 +63,16 @@ long long Quociente::FindFor( unsigned long long k )
     }
 }
 
-void Quociente::SetX( long long newX ) 
+void Quociente::SetX( long newX ) 
 {
   x = newX;
 
-  exp.SetBaseValue( x ) ;
+  exp.SetBaseValue( newX ) ;
 
   q.erase( q.begin() + 2 , q.end() ) ;
 }
 
-void Quociente::SetY( long long newY )
+void Quociente::SetY( long newY )
 {
   y = newY ;
 

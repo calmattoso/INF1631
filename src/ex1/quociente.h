@@ -2,6 +2,7 @@
 #define QUOCIENTE_H
 
 #include <vector>
+#include <gmpxx.h>
 #include "fast_exp.h"
 
 class Quociente 
@@ -10,22 +11,22 @@ private:
 
   Exponentiation exp;
 
-  long long x , y ;
+  mpz_class x , y ;
 
   /* Array of previously seen quocients */
-  std::vector<long long> q;
+  std::vector< mpz_class > q;
 
   unsigned int largestK;
 
 public:
 
-  Quociente( long long , long long );
+  Quociente( long , long );
 
-  long long FindFor( unsigned long long );
+  mpz_class FindFor( unsigned long );
 
-  void SetX( long long ) ;
+  void SetX( long ) ;
 
-  void SetY( long long ) ;
+  void SetY( long ) ;
 
 };
 

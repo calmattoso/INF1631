@@ -1,33 +1,32 @@
-#include <cstdio>
+#include <iostream>
+#include <gmpxx.h>
+#include <cstdlib>
 #include "quociente.h"
 
 #ifdef TIME
   #include "lib/CPUTimer/CPUtimer.h"
 #endif
 
-#define MAX 5
+#define MAX 25
 
-int main()
+int main( int argc, const char * argv[] )
 {
+  int n_itrs = MAX;  
 
-  for(int x = -MAX; x < MAX; ++x)
-    for(int y = -MAX; y < MAX; ++y)
+  if( argc > 1 )
+    n_itrs = atoi( argv[1] );
+    
+    
+  for(int x = -n_itrs; x < n_itrs; ++x)
+    for(int y = -n_itrs; y < n_itrs; ++y)
     {
       if( y == x )
         continue;
 
       Quociente q( x , y ) ;
 
-      for(int k = 1  ; k < MAX; ++k)
-      {
-        long long quociente;
-        
-        quociente = q.FindFor( k ) ;
-
-        printf( 
-          "(%d^%d - %d^%d)/(%d - %d) = %I64d \n",
-             x, k,   y, k,   x,   y,    quociente        );
-      }
+      for(int k = 1 ; k < n_itrs; ++k)
+        std::cout << q.FindFor( k ) << std::endl;
     }
 
 

@@ -1,16 +1,16 @@
 #include "fast_exp.h"
 
-Exponentiation::Exponentiation( long long x ) 
+Exponentiation::Exponentiation( long x ) 
 {
   baseValue = x;
 
   memoize.push_back( 1 ) ; // x^0 = 1
 }
 
-long long Exponentiation::PowerOf( unsigned long long k ) 
+mpz_class Exponentiation::PowerOf( unsigned long k ) 
 {
-  unsigned long long largestPower = memoize.size() - 1;
-  long long last = memoize[ largestPower ] ;
+  unsigned long largestPower = memoize.size() - 1;
+  mpz_class last = memoize[ largestPower ] ;
 
   for( ; largestPower <= k ; largestPower++ )
   {
@@ -22,7 +22,7 @@ long long Exponentiation::PowerOf( unsigned long long k )
   return memoize[ k ];
 }
 
-void Exponentiation::SetBaseValue( long long newX )
+void Exponentiation::SetBaseValue( long newX )
 {
   baseValue = newX ;
 
