@@ -4,7 +4,7 @@
 #include "quociente.h"
 
 #ifdef TIME
-  #include "lib/CPUTimer/CPUtimer.h"
+  #include "../lib/CPUTimer/CPUTimer.h"
 #endif
 
 #define MAX 25
@@ -15,6 +15,11 @@ int main( int argc, const char * argv[] )
 
   if( argc > 1 )
     n_itrs = atoi( argv[1] );
+
+  #ifdef TIME
+    CPUTimer timer;
+    int runs = 0;
+  #endif
     
     
   for(int x = -n_itrs; x < n_itrs; ++x)
@@ -25,10 +30,32 @@ int main( int argc, const char * argv[] )
 
       Quociente q( x , y ) ;
 
+      #ifdef TIME
+        timer.start();
+      #endif
+      
       for(int k = 1 ; k < n_itrs; ++k)
-        std::cout << q.FindFor( k ) << std::endl;
+      {
+        #ifdef SHOW_QS
+          mpz_class quoc = q.FindFor( k );
+
+          std::cout << quoc << std::endl;
+        #else
+          q.FindFor( k )
+        #endif
+
+        runs++;
+      }
+
+      #ifdef TIME
+        timer.stop();
+      #endif
     }
 
+  #ifdef TIME
+    std::cout << "Total time: " << timer.getCPUTotalSecs() << "s" << std::endl;
+    std::cout << "Avg. time : " << timer.getCPUTotalSecs()/runs << "s" << std::endl;
+  #endif
 
   return 0;
 }
