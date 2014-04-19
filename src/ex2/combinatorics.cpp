@@ -3,42 +3,17 @@
 #include <sstream>
 
 /* UTILS */
-ull Combinatorics::expt( ull p, ull q)
-{
-  ull r = 1;
-
-  while (q != 0) {
-      if (q % 2 == 1) {    // q is odd
-          r *= p;
-          q--;
-      }
-      p *= p;
-      q /= 2;
-  }
-
-  return r;
-}
 
 Combinatorics::Combinatorics( ull _k , ull _m ) 
 {
   k = _k;
   m = _m;
 
-  /* Overestimate the length of array of numbers, 
-       and create those positions */
-    ResizeNumbers();
-
   /* Generate digits */
     GenerateDigits();
 }
 
-void Combinatorics::ResizeNumbers()
-{
-  ull estimatedSize = expt( m , k );
-  numbers.resize( estimatedSize , "" );
-}
-
-std::list< std::string > Combinatorics::GenerateDigits( )
+void Combinatorics::GenerateDigits( )
 {
   ull start = digits.size();
 
@@ -53,21 +28,37 @@ std::list< std::string > Combinatorics::GenerateDigits( )
   }
 }
 
-std::list< std::string > Combinatorics::GenerateNumbers( ull n , ull m )
+/* 
+ *  O "retorno" é feito colocando-se no atributo (numbers) o resultado de cada
+ *    passo do algoritmo 
+ */
+void Combinatorics::GenerateNumbers( ull n , ull m )
 {
   /*
    * Caso Base
    * =========
    *
-   *  Com 0 dígitos, é possível apenas o vetor vazio. 
+   *  Com 0 dígitos, é possível apenas o vetor vazio. Assim, basta
+   *    esvaziar (numbers).
    *  Com 1 dígito, teremos (m) números, cada um formato por um
    *    dígito distinto dos (m) possíveis.
    *
    */
     if( n == 0 )
-      return std::list< std::string >();
+    {
+      numbers.clear();
+      return;
+    }
     if( n == 1 )
-      return std::list< std::string >(digits.begin(), digits.end());
+    {
+      for( ull digitIdx = 0 ; digitIdx < m ; digitIdx++ )
+      {
+        Number digitNumber( digits[ digitIdx ] );
+        numbers.push_back( digitNumber );
+      }
+
+      return;
+    }
 
   /*
    * Passo Indutivo
@@ -86,55 +77,81 @@ std::list< std::string > Combinatorics::GenerateNumbers( ull n , ull m )
    *    (n) dígitos.
    *  Como temos que saber de (n-1) utilizamos recursão, andando para trás até
    *    atingir-se o caso base.
+   * !!! OBS !!!
+   * -----------
+   *  Para fins de otimização, esta função ao invés de retornar o vetor com 
+   *    números de (n) dígitos simplesmente os salva no atributo (numbers).
+   *    Essencialmente, ao alterarmos (numbers) seguindo o algoritmo é como
+   *    se um retorno fosse feito.
    *
    */
 
-    /* Obtém E{n-1, m} */
-    numbers = GenerateNumbers( n - 1 , m );
+    /* 
+     * Obtém E{n-1, m}
+     * ===============
+     *  Apenas geramos números com (n-1) dígitos, caso já não os tenhamos
+     *    armazenados em (numbers).
+     */
+      if( !numbers.empty() && numbers[0].GetLength() < (n-1) )
+        GenerateNumbers( n - 1 , m ) ;
 
     /* 
      * Passa por cada número e verifica em quais dos conjuntos 
      *   descritos acima ele entraria, imediatamente adicionando
      *   o novo dígito ao final e introduzindo este novo número
-     *   no vetor de números 
+     *   no vetor de números. 
      */
-    ull originalSize = numbers.size();
-    for(std::list<std::string>::iterator it = numbers.begin() ;
-        it != numbers.end() ; ++it )
-    {
-      std::string number = (*it);
+      ull originalSize = numbers.size();
 
-      for(ull digit = 0; digit < m; digit++ )
+      for(std::deque< Number >::iterator it = numbers.begin() ;
+          it != numbers.end() ; ++it )
       {
-        std::size_t found = number.find( digits[ digit ] );
-        
-        /* O número (number) não tem o dígito ( digits[digit] ) */
-        if (found == std::string::npos)
-        {
-          std::stringstream newNumber;
-          newNumber << number << digit;
-          numbers.push_back( newNumber.str() ) ;
-        }
+        Number number = (*it);
+
+        /* 
+          Checa para cada dígito se o número atual o contém 
+            [ segmentação em E^d{i}{ n-1 , m } ] 
+        */
+          for(ull digit = 0; digit < m; digit++ )
+          {
+            /* 
+              O número (number) não tem o dígito ( digits[digit] ),
+                logo, o adicionamos ao final
+                [ etada de concatenação do passo indutivo ] 
+            */
+              if ( !number.HasDigit( digits[ digit ] ) )
+              {
+                Number newNumber( number );
+                newNumber.AppendDigit( digits[ digit ] );
+
+                numbers.push_back( newNumber ) ;
+              }
+          }
       }
-    }
 
     /* Remove os números que tinham apenas (n - 1) dígitos */
-    std::list<std::string>::iterator itrEnd = numbers.begin();
-    advance( itrEnd , originalSize ) ;
-    numbers.erase( numbers.begin(), itrEnd );
+      numbers.erase( numbers.begin() + originalSize );
 
-    /* return E{n,m} */
-    return numbers;
+    /* Ao final temos E{n,m} em (numbers), como desejado.  */
 }
 
-std::list< std::string > Combinatorics::GetNumbers(){
-  return GenerateNumbers( k , m );
+std::deque< Number > Combinatorics::GetNumbers(){
+  GenerateNumbers( k , m );
+
+  return this->numbers ;
 }
 
-void Combinatorics::SetK( ull _k ){
-  k = _k;
+void Combinatorics::SetK( ull newK ){
+  /* 
+    numbers should only be cleared if (k) is decreased. If (newK) is 
+      at least as large as (k), we should keep the numbers of (k) digits
+      already generated so GenerateNumbers can make use of them.
+  */
+  if( newK < k )
+    numbers.clear();
 
-  ResizeNumbers();
+
+  k = newK;
 }
 
 void Combinatorics::SetM( ull newM ){
@@ -142,7 +159,7 @@ void Combinatorics::SetM( ull newM ){
 
   GenerateDigits();
 
-  ResizeNumbers();
+  numbers.clear();
 }
 
 

@@ -3,7 +3,9 @@
 
 #include <string>
 #include <list>
-#include <vector>
+#include <deque>
+
+#include "number.h"
 
 typedef unsigned long ull;
 
@@ -11,26 +13,22 @@ class Combinatorics
 {
 private:
 /* DATA */
-  std::list< std::string > numbers;
-  std::vector< std::string > digits ;
+  std::deque< Number > numbers;
+  std::deque< std::string > digits ;
 
   ull k, m;
 
-/* UTILS */
-  ull expt( ull , ull );
-
 /* HELPERS */
-  void ResizeNumbers();
 
-  std::list< std::string > GenerateDigits( ) ;
+  void GenerateDigits( ) ;
 
-  std::list< std::string > GenerateNumbers( ull , ull ) ;
+  void GenerateNumbers( ull , ull ) ;
 
 public:
 
   Combinatorics( ull , ull );
 
-  std::list< std::string > GetNumbers();
+  std::deque< Number > GetNumbers();
 
 /* RECONFIGURE */
   void SetK( ull );
