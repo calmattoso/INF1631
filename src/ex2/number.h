@@ -26,7 +26,7 @@ private:
   unsigned long maxLen;
 
 
-  bloom_filter filter ;
+  //bloom_filter filter ;
 
 /* HELPER */
 
