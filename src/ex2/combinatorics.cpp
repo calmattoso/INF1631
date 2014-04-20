@@ -41,6 +41,7 @@ void Combinatorics::GenerateDigits( )
  */
 void Combinatorics::GenerateNumbers( ull n , ull m )
 {
+  std::cout << n << ", " << m << "\n";
   /*
    * Caso Base
    * =========
@@ -101,7 +102,7 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
      *  Apenas geramos números com (n-1) dígitos, caso já não os tenhamos
      *    armazenados em (numbers).
      */
-      if( !numbers.empty() && numbers[0].GetLength() < (n-1) )
+      if( numbers.empty() || !numbers.empty() && numbers[0].GetLength() < (n-1) )
         GenerateNumbers( n - 1 , m ) ;
 
     /* 
