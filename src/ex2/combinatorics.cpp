@@ -1,8 +1,15 @@
 #include "combinatorics.h"
 
 #include <sstream>
+#include <iostream>
 
-/* UTILS */
+
+Combinatorics::Combinatorics() :
+  k( 0 ),
+  m( 9 )
+{
+  GenerateDigits();
+}
 
 Combinatorics::Combinatorics( ull _k , ull _m ) 
 {
@@ -40,20 +47,22 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
    *
    *  Com 0 dígitos, é possível apenas o vetor vazio. Assim, basta
    *    esvaziar (numbers).
-   *  Com 1 dígito, teremos (m) números, cada um formato por um
-   *    dígito distinto dos (m) possíveis.
-   *
    */
     if( n == 0 )
     {
       numbers.clear();
       return;
     }
+
+  /*
+   *  Com 1 dígito, teremos (m) números, cada um formato por um
+   *    dígito distinto dos (m) possíveis.
+   */
     if( n == 1 )
     {
       for( ull digitIdx = 0 ; digitIdx < m ; digitIdx++ )
       {
-        Number digitNumber( digits[ digitIdx ] );
+        Number digitNumber( digits[ digitIdx ] , n );
         numbers.push_back( digitNumber );
       }
 
@@ -101,7 +110,7 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
      *   o novo dígito ao final e introduzindo este novo número
      *   no vetor de números. 
      */
-      ull originalSize = numbers.size();
+      std::deque< Number > newNumbers;
 
       for(std::deque< Number >::iterator it = numbers.begin() ;
           it != numbers.end() ; ++it )
@@ -121,16 +130,16 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
             */
               if ( !number.HasDigit( digits[ digit ] ) )
               {
-                Number newNumber( number );
+                Number newNumber( number , number.GetLength() + 1 );
                 newNumber.AppendDigit( digits[ digit ] );
 
-                numbers.push_back( newNumber ) ;
+                newNumbers.push_back( newNumber ) ;
               }
           }
       }
 
-    /* Remove os números que tinham apenas (n - 1) dígitos */
-      numbers.erase( numbers.begin() + originalSize );
+    /* Coloca em numbers os novos números gerados */
+      numbers.assign( newNumbers.begin() , newNumbers.end() );
 
     /* Ao final temos E{n,m} em (numbers), como desejado.  */
 }
@@ -149,7 +158,6 @@ void Combinatorics::SetK( ull newK ){
   */
   if( newK < k )
     numbers.clear();
-
 
   k = newK;
 }

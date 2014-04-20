@@ -26,6 +26,7 @@ private:
 
 public:
 
+  Combinatorics();
   Combinatorics( ull , ull );
 
   std::deque< Number > GetNumbers();
