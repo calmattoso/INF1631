@@ -41,7 +41,6 @@ void Combinatorics::GenerateDigits( )
  */
 void Combinatorics::GenerateNumbers( ull n , ull m )
 {
-  std::cout << n << ", " << m << "\n";
   /*
    * Caso Base
    * =========
