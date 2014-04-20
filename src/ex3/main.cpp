@@ -1,128 +1,83 @@
-#include "Match.h"
-#include "Round.h"
-#include "Team.h"
+#include "testalgorithm.h"
 #include <iostream>
 #include <cmath>
 #include <cstdio>
 #include <string>
 #include <sstream>
 #include "../lib/CPUTimer/CPUTimer.h"
+ 
+#include "Match.h"
+#include "Team.h"
+#include "Round.h"
 
-
-#define MAX_ITERATIONS 20
+#define MAX_K 20
+#define MAX_K_TO_PRINT_RESULTS 3
 
 using namespace std;
 
-Round* generateRounds(int k, Team** teams);
-void testAlgorithm(int k);
+void calculateDataSize(int k,int* numTeams,int* numRounds,int* numMatches)
+{
+	*numTeams = pow(2, k);
+	*numRounds = *numTeams - 1;
+	*numMatches = (*numTeams / 2)**numRounds;
+}
 
 int main(int argc, const char * argv[])
 {
-	int numberOfIterations = MAX_ITERATIONS;
+	int numberOfIterations = MAX_K;
 
 	if (argc > 1)
 		numberOfIterations = atoi(argv[1]);
 
 	CPUTimer timer;
-	int runs = 0;
+	int totalRuns = 0;
+
+	cout << "Initializing computation for different values of k:" << endl;
+	cout << "Trying to generate rounds for k from 0 to " << MAX_K << endl;
+	cout << "Printing rounds output for k <= " << MAX_K_TO_PRINT_RESULTS << endl;
+	cout << "----------------------------------------------------" << endl;
 
 	timer.start();
-
-	for (int k = 1; k <= numberOfIterations; k++)
+	for (int k = 0; k <= numberOfIterations; k++)
 	{
 		CPUTimer timerPerK;
-		timerPerK.start();
-			testAlgorithm(k);
-			runs++;
-		timerPerK.stop();
-		cout << "Rounds using k=" << k << "generated in "<< timerPerK.getCPUTotalSecs() << "s." << endl;
+		int runsPerK=0;
+		stringstream output;
+		do
+		{
+			timerPerK.start();
+			output = testAlgorithm(k, false);
+			timerPerK.stop();
+			totalRuns++;
+			runsPerK++;
+		} while (timerPerK.getCPUTotalSecs() < 5.0);
+
+		if (k <= MAX_K_TO_PRINT_RESULTS)
+		{
+			timerPerK.start();
+			output = testAlgorithm(k, true);
+			timerPerK.stop();
+			totalRuns++;
+			runsPerK++;
+		}
+
+		cout << endl << "Results for k=" << k << ":" << endl << endl;
+
+		int numTeams, numRounds, numMatches;
+		calculateDataSize(k,&numTeams,&numRounds,&numMatches);
+
+		cout << "\t" << numTeams << " teams." << endl;
+		cout << "\t" << numRounds << " rounds with " << numTeams / 2 << " matches per round." << endl;
+		cout << "\t" << numMatches << " total number of matches." << endl << endl;
+
+		cout << "\t" << runsPerK << " runs in " << timerPerK.getCPUTotalSecs() << "s" << endl;
+		cout << "\t" << "Average time per run: " << timerPerK.getCPUTotalSecs() / runsPerK << "s" << endl;
+		cout << output.str();
 	}
 
 	timer.stop();
 
 	cout << "Total time: " << timer.getCPUTotalSecs() << "s" << endl;
-	cout << "Average time : " << timer.getCPUTotalSecs() / (double)runs << "s" << endl;
+	cout << "Average time per run : " << timer.getCPUTotalSecs() / (double)totalRuns << "s" << endl;
 
-}
-
-void testAlgorithm(int k)
-{
-	int numberOfTeams = (int)pow(2.0, k);;
-	Team** teams;
-
-	teams = new Team*[numberOfTeams];
-
-	for (int i = 0; i < numberOfTeams; i++)
-	{
-		stringstream ss;
-		ss << i+1;
-
-		teams[i] = new Team(ss.str().c_str());
-	}
-
-	Round* rounds = generateRounds(k, teams);
-	/*
-	cout << "Rounds generated:" << endl;
-	for (int i = 0; i < numberOfTeams - 1; i++)
-		cout << "Round " << i + 1 << ": " << rounds[i] << endl;
-	*/
-
-	for (int i = 0; i < numberOfTeams - 1; i++)
-		rounds[i].deleteMatches();
-	delete[] rounds;
-	for (int i = 0; i < numberOfTeams; i++)
-		delete teams[i];
-	delete[] teams;
-}
-
-Round* generateRounds(int k, Team** teams)
-{
-	Round* rounds;
-	int numberOfTeams = (int) pow(2.0, k);
-
-	// A total of numberOfTeams-1 should be generated
-	rounds = new Round[numberOfTeams-1];
-
-	// Base Cases
-	if (k == 0)
-	{
-		// k=0 results in 1 team.
-		// There are not enough teams to generate a match. So, no rounds are supposed to be generated.
-	}
-	if (k == 1)
-	{
-		// k=1 results in 2 teams.
-		// In this case, only one round containing the match between the teams is supposed to be generated.
-		rounds[0].addMatch(new Match(teams[0], teams[1]));
-	}
-	// Recursion Step
-	else
-	{
-		int halfTheNumberOfTeams = numberOfTeams / 2; // halfTheNumberOfTeams is an integer because numberOfTeams is even
-
-		Team** teamsFirstHalf = teams;
-		Team** teamsSecondHalf = teams + halfTheNumberOfTeams;
-
-		// Induction Hypothesis: It's known how to generate the rounds for the first half of the teams (k-1) and for the second half (k-1) as well.
-		// firstHalfTeamsRounds and secondHalfTeamsTeamsRounds should point to an array containing (n/2)-1 rounds.
-		Round* firstHalfTeamsRounds = generateRounds(k - 1, teamsFirstHalf);
-		Round* secondHalfTeamsTeamsRounds = generateRounds(k - 1, teamsSecondHalf);
-
-		// Generates the first (n/2)-1 rounds based on the rounds generated for the first and second half of the teams.
-		// Round[i] = Round1stHalf[i] U Round2ndHalf[i], i=1..(n/2)-1
-		// After this step, the only matches missing should be the matches between the first and second half sets of teams.
-		for (int i = 1; i <= halfTheNumberOfTeams-1; i++)
-			rounds[i-1] = firstHalfTeamsRounds[i-1] + secondHalfTeamsTeamsRounds[i-1]; // The operator+ indicates a SET UNION operator.
-
-		delete[] firstHalfTeamsRounds;
-		delete[] secondHalfTeamsTeamsRounds;
-
-		// Generates the rounds between the first and second half sets of teams.
-		// Round[(n/2)+t] = {(e[1+((j+t)%(n/2))],e[j+(n/2)]), j=1..(n/2)}, t =0..(n/2)-1.
-		for (int t = 0; t <= halfTheNumberOfTeams - 1; t++) // Rounds iterator
-			for (int j = 1; j <= halfTheNumberOfTeams; j++) // Teams matching iterator
-				rounds[halfTheNumberOfTeams + t-1].addMatch(new Match(teams[1 + ((j + t) % halfTheNumberOfTeams) -1], teams[j + halfTheNumberOfTeams -1]));
-	}
-
-	return rounds;
 }
