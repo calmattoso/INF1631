@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdio>
 #include <string>
+#include <sstream>
 #include "../lib/CPUTimer/CPUTimer.h"
 
 
@@ -53,7 +54,10 @@ void testAlgorithm(int k)
 
 	for (int i = 0; i < numberOfTeams; i++)
 	{
-		teams[i] = new Team(to_string(i+1).c_str());
+		stringstream ss;
+		ss << i+1;
+
+		teams[i] = new Team(ss.str().c_str());
 	}
 
 	Round* rounds = generateRounds(k, teams);
