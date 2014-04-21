@@ -1,5 +1,10 @@
-#include <sstream>
+#ifndef TESTALGORITHM_H
+#define TESTALGORITHM_H
+
+#include <string>
 
 using namespace std;
 
-stringstream testAlgorithm(int k, bool generateOutput);
+string testAlgorithm(int k, bool generateOutput);
+
+#endif

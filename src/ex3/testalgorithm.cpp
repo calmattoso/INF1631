@@ -3,12 +3,13 @@
 #include "Team.h"
 #include "Round.h"
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
-stringstream testAlgorithm(int k, bool generateOutput)
+string testAlgorithm(int k, bool generateOutput)
 {
-	int numberOfTeams = (int)pow(2.0, k);;
+	int numberOfTeams = (int) pow( 2.0 , k );
 	Team** teams;
 
 	teams = new Team*[numberOfTeams];
@@ -37,5 +38,6 @@ stringstream testAlgorithm(int k, bool generateOutput)
 	for (int i = 0; i < numberOfTeams; i++)
 		delete teams[i];
 	delete[] teams;
-	return output;
+
+	return output.str();
 }

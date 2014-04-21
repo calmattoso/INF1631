@@ -33,7 +33,7 @@ int main(int argc, const char * argv[])
 	int totalRuns = 0;
 
 	cout << "Initializing computation for different values of k:" << endl;
-	cout << "Trying to generate rounds for k from 0 to " << MAX_K << endl;
+	cout << "Trying to generate rounds for k from 0 to " << numberOfIterations << endl;
 	cout << "Printing rounds output for k <= " << MAX_K_TO_PRINT_RESULTS << endl;
 	cout << "----------------------------------------------------" << endl;
 
@@ -42,7 +42,7 @@ int main(int argc, const char * argv[])
 	{
 		CPUTimer timerPerK;
 		int runsPerK=0;
-		stringstream output;
+		string output;
 		do
 		{
 			timerPerK.start();
@@ -50,7 +50,7 @@ int main(int argc, const char * argv[])
 			timerPerK.stop();
 			totalRuns++;
 			runsPerK++;
-		} while (timerPerK.getCPUTotalSecs() < 5.0);
+		} while ( timerPerK.getCPUTotalSecs() < 5.0 );
 
 		if (k <= MAX_K_TO_PRINT_RESULTS)
 		{
@@ -72,7 +72,7 @@ int main(int argc, const char * argv[])
 
 		cout << "\t" << runsPerK << " runs in " << timerPerK.getCPUTotalSecs() << "s" << endl;
 		cout << "\t" << "Average time per run: " << timerPerK.getCPUTotalSecs() / runsPerK << "s" << endl;
-		cout << output.str();
+		cout << output;
 	}
 
 	timer.stop();
