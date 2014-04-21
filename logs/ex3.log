@@ -1,0 +1,163 @@
+Initializing computation for different values of k:
+Trying to generate rounds for k from 0 to 20
+Printing rounds output for k <= 3
+----------------------------------------------------
+
+Results for k=0:
+
+	1 teams.
+	0 rounds with 0 matches per round.
+	0 total number of matches.
+
+	3016214 runs in 5s
+	Average time per run: 1.65771e-006s
+	Rounds generated:
+
+Results for k=1:
+
+	2 teams.
+	1 rounds with 1 matches per round.
+	1 total number of matches.
+
+	2012070 runs in 5s
+	Average time per run: 2.485e-006s
+	Rounds generated:
+		Round 1: {(1,2)}
+
+Results for k=2:
+
+	4 teams.
+	3 rounds with 2 matches per round.
+	6 total number of matches.
+
+	1039078 runs in 5s
+	Average time per run: 4.81196e-006s
+	Rounds generated:
+		Round 1: {(1,2),(3,4)}
+		Round 2: {(2,3),(1,4)}
+		Round 3: {(1,3),(2,4)}
+
+Results for k=3:
+
+	8 teams.
+	7 rounds with 4 matches per round.
+	28 total number of matches.
+
+	461214 runs in 5s
+	Average time per run: 1.0841e-005s
+	Rounds generated:
+		Round 1: {(1,2),(3,4),(5,6),(7,8)}
+		Round 2: {(2,3),(1,4),(6,7),(5,8)}
+		Round 3: {(1,3),(2,4),(5,7),(6,8)}
+		Round 4: {(2,5),(3,6),(4,7),(1,8)}
+		Round 5: {(3,5),(4,6),(1,7),(2,8)}
+		Round 6: {(4,5),(1,6),(2,7),(3,8)}
+		Round 7: {(1,5),(2,6),(3,7),(4,8)}
+
+Results for k=4:
+
+	16 teams.
+	15 rounds with 8 matches per round.
+	120 total number of matches.
+
+	179168 runs in 5s
+	Average time per run: 2.79068e-005s
+
+Results for k=5:
+
+	32 teams.
+	31 rounds with 16 matches per round.
+	496 total number of matches.
+
+	62262 runs in 5s
+	Average time per run: 8.03058e-005s
+
+Results for k=6:
+
+	64 teams.
+	63 rounds with 32 matches per round.
+	2016 total number of matches.
+
+	21656 runs in 5s
+	Average time per run: 0.000230883s
+
+Results for k=7:
+
+	128 teams.
+	127 rounds with 64 matches per round.
+	8128 total number of matches.
+
+	7124 runs in 5s
+	Average time per run: 0.000701853s
+
+Results for k=8:
+
+	256 teams.
+	255 rounds with 128 matches per round.
+	32640 total number of matches.
+
+	2114 runs in 5s
+	Average time per run: 0.00236518s
+
+Results for k=9:
+
+	512 teams.
+	511 rounds with 256 matches per round.
+	130816 total number of matches.
+
+	572 runs in 5s
+	Average time per run: 0.00874126s
+
+Results for k=10:
+
+	1024 teams.
+	1023 rounds with 512 matches per round.
+	523776 total number of matches.
+
+	137 runs in 5s
+	Average time per run: 0.0364964s
+
+Results for k=11:
+
+	2048 teams.
+	2047 rounds with 1024 matches per round.
+	2096128 total number of matches.
+
+	33 runs in 5.01562s
+	Average time per run: 0.151989s
+
+Results for k=12:
+
+	4096 teams.
+	4095 rounds with 2048 matches per round.
+	8386560 total number of matches.
+
+	9 runs in 5.57812s
+	Average time per run: 0.619792s
+
+Results for k=13:
+
+	8192 teams.
+	8191 rounds with 4096 matches per round.
+	33550336 total number of matches.
+
+	2 runs in 7.20312s
+	Average time per run: 3.60156s
+
+Results for k=14:
+
+	16384 teams.
+	16383 rounds with 8192 matches per round.
+	134209536 total number of matches.
+
+	1 runs in 55.2969s
+	Average time per run: 55.2969s
+
+Results for k=15:
+
+	32768 teams.
+	32767 rounds with 16384 matches per round.
+	536854528 total number of matches.
+
+	1 runs in 793.641s
+	Average time per run: 793.641s
