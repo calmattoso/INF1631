@@ -1,0 +1,1 @@
+g++ -w -O3 -DTIME -o ../bin/ex1 ../src/ex1/*.cpp ../src/lib/CPUTimer/CPUTimer.cpp -lgmpxx -lgmp

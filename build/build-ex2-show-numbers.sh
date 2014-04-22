@@ -1,0 +1,1 @@
+g++ -w -O3 -DTIME -DSHOW_NUMBERS -o ../bin/ex2-show-numbers ../src/ex2/*.cpp ../src/lib/CPUTimer/CPUTimer.cpp

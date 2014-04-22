@@ -1,0 +1,1 @@
+g++ -w -O3 -o ../bin/ex3 ../src/ex3/* ../src/lib/CPUTimer/CPUTimer.cpp

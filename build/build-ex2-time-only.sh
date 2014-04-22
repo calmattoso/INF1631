@@ -1,0 +1,1 @@
+g++ -w -O3 -DTIME -o ../bin/ex2 ../src/ex2/*.cpp ../src/lib/CPUTimer/CPUTimer.cpp

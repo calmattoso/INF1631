@@ -1,0 +1,72 @@
+INF1631 - T1 de Estruturas Discretas
+====================================
+
+Estrutura de Diretórios
+-----------------------
+  /bin   - para onde serão compilados cada exs. caso usem-se os 
+           scripts de compilação
+  /build - scripts de compilação utilizando g++
+  /logs  - arquivos com saídas para os testes que fizemos;
+           arquivos com huge no final indicam resultados de testes
+           para maiores valores dos parâmetros
+  /src   - códigos fontes de cada exercício
+    ex1/ - exercício 1
+      test/
+        gen_actual.py - código em python que gera uma série de quocientes de forma
+                        equivalente a main.cpp fornecida (caso compilada com SHOW_QS)
+      fast_exp.*  - classe para acelerar exponenciação de x
+      quociente.* - classe que acha Qk para dados *x*, *y*, *k*
+                    função **Quociente::FindFor** implementa o algoritmo da prova
+      main.cpp    - main para testes
+
+    ex2/ - exercício 2
+      number.* - classe que representa os números gerados da permutação de dígitos
+      combinatorics.* - classe usada para achar os diferentes números, dados *k* e *m*
+                        função Combinatorics::GenerateNumbers implementa o algoritmo
+                        da prova, devendo ser chamada pela função pública GetNumbers
+      main.cpp - usada para fazer alguns testes
+
+    ex3/ - exercício 3
+      Match.h - classe que representa uma partida
+      Round.h - classe para armazenar uma rodada
+      Team.h  - classe que representa uma equipe
+      roundgenerator.cpp - função **generateRounds** implementa o algoritmo
+                           da prova.
+      main.cpp - testes
+
+    lib/
+      CPUTimer - biblioteca de medição de tempo de CPU
+
+Modo de Uso
+-----------  
+  Seguindo os scripts de compilação e usando as mains fornecidas, os 
+    executáveis de cada exercício podem ser usados da seguinte forma:
+
+> ex1.exe < n > 
+    
+    Serão feitos 'for's aninhados da forma
+    
+      for x = [ -n , n )
+        for y = [ -n , n )
+          if x != y
+            for k = [ 1 , n )
+              find q( x, y, k )
+    
+    A saída consistirá no tempo que leva para gerar cada quociente, sendo mais
+      interessante a medida de tempo total. Além disso, podem ser exibidos os qs
+      caso tenha-se usado build-ex1-show-quocs.sh .
+
+> ex2.exe < m_beg > < m_end > < k_beg > < k_end >
+    
+    Para cada valor de m de m_beg a m_end, para cada valor de k de k_beg até 
+      k_end, serão geradas todas as permutações de números para os dados k e m.
+    Compilando-se com build-ex2-show-numbers.sh os números serão mostrados, caso
+      contrário apenas os tempos de CPU serão exibidos.
+
+> ex3.exe < k_max >
+
+    Serão gerados todas as possíveis rodadas até k_max, exibindo-se medidas de tempo de
+      CPU e informações quanto ao número de times/rodadas/jogos. 
+
+
+
