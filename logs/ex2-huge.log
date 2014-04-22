@@ -1,0 +1,48 @@
+m[ 10 ] k[ 6 ]
+	#numbers: 151200
+	Trial time: 0.203125s
+m[ 10 ] k[ 7 ]
+	#numbers: 604800
+	Trial time: 0.828125s
+m[ 11 ] k[ 6 ]
+	#numbers: 332640
+	Trial time: 0.421875s
+m[ 11 ] k[ 7 ]
+	#numbers: 1663200
+	Trial time: 2.3125s
+m[ 12 ] k[ 6 ]
+	#numbers: 665280
+	Trial time: 0.8125s
+m[ 12 ] k[ 7 ]
+	#numbers: 3991680
+	Trial time: 5.45312s
+m[ 13 ] k[ 6 ]
+	#numbers: 1235520
+	Trial time: 2.03125s
+m[ 13 ] k[ 7 ]
+	#numbers: 8648640
+	Trial time: 12.7656s
+m[ 14 ] k[ 6 ]
+	#numbers: 2162160
+	Trial time: 5.875s
+m[ 14 ] k[ 7 ]
+	#numbers: 17297280
+	Trial time: 66.4375s
+m[ 15 ] k[ 6 ]
+	#numbers: 3603600
+	Trial time: 16.2031s
+m[ 15 ] k[ 7 ]
+	#numbers: 32432400
+	Trial time: 216.891s
+m[ 16 ] k[ 6 ]
+	#numbers: 5765760
+	Trial time: 8.35938s
+m[ 16 ] k[ 7 ]
+	#numbers: 57657600
+	Trial time: 519.156s
+m[ 17 ] k[ 6 ]
+	#numbers: 8910720
+	Trial time: 16.0625s
+m[ 17 ] k[ 7 ]
+	#numbers: 98017920
+	Trial time: 978.234s
