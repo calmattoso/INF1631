@@ -60,6 +60,7 @@
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 \usepackage{color}
+\usepackage{amsmath}
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
@@ -131,15 +132,86 @@ Otimizações foram feitas desde que não obsfuscassem as induções que origina
 \indent $\mathbf{Teorema}$ $\mathbf{2}$ O número de números inteiros cujos dígitos pertencem ao conjunto \{1, 2, . . . , m\} de
 K dígitos diferentes é dado pelo produto m.(m - 1)...(m - k + 1).\\
 
+\textbf{Define-se:}\\
+$d_x$ := algarismo de valor absoluto x\\
+$N_{n,m}$ := $\{ x | $ $x=a_n \dots a_2a_1$ tal que $a_i \in \{d_1,d_2, \dots ,d_m\}$, o conjunto de dígitos$\}$ = números de n dígitos com dígitos com valor até m.\\
+
+Podemos enunciar o seguinte teorema, válido para todo n e m inteiros, tal que $n,m\geq1$:\\
+
+$\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ Sabe-se enumerar explicitamente os elementos do conjunto:\\
+$E_{n,m}$ = $\{ x | $ $x \in N_{n,m}$ e $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq n ((i \neq j) \rightarrow ( a_i \neq a_j ))$ = números de n dígitos com dígitos distintos com valor até m.
 
 \subsection{ Prova }
-\indent Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultrices scelerisque semper. Donec cursus euismod enim eget sodales. Duis sit amet lacinia leo, at tristique libero. Suspendisse eget placerat felis. Nulla non nibh pharetra, sodales mauris et, tristique arcu. Donec placerat ornare convallis. Vestibulum elementum enim eu aliquet faucibus. Donec rutrum orci at erat tempus, ac pellentesque sapien facilisis. Morbi suscipit euismod ligula, vel laoreet ligula euismod in. Phasellus suscipit neque tellus, ut eleifend dui sollicitudin vel. Vivamus ut hendrerit justo. Curabitur vitae massa ullamcorper, ullamcorper metus nec, condimentum purus. Aenean nec lacus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi tincidunt est ut quam molestie convallis.
+\indent \textbf{(Prova por indução no parâmetro n)}\\
+
+\textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
+
+\textit{\textbf{Teorema 3 (0,m):} (Caso Degenerado)}\\
+$n=0 \rightarrow N_{0,m} = \emptyset$\\
+$E_{0,m} \subseteq N_{0,m} \rightarrow E_{0,m} = \emptyset $\\
+$E_{0,m}$ não possui elementos, logo podemos enumerar seus elementos como: \{\}\\
+
+\textit{\textbf{Teorema 3 (1,m):}}\\
+Na definição de $E_{1,m}$ como $1 \leq i,j \leq 1 \rightarrow i=j$ então $((i \neq j) \rightarrow ( a_i \neq a_j ))$ é sempre verdadeiro.\\
+Logo,  $E_{1,m} = N_{1,m} = \{d_1,d_2,\dots,d_m\}$\\
+Assim podemos enumerar os elementos de  $E_{1,m}$ explicitamente como $\{d_1,d_2,\dots,d_m\}$.\\
+
+\textbf{Teorema do Passo Indutivo:}\\
+
+\textit{\textbf{Teorema 3 (k,m) $\rightarrow$ Teorema 3 (k+1,m)}}\\
+Pela hipótese indutiva sabe-se enumerar explicitamente o conjunto $E_{k,m}$ \\
+Deseja-se enumerar explicitamente o conjunto  $E_{k+1,m}$ utilizando-se do fato de conhecer-se a enumeração de  $E_{k,m}$.\\
+
+\textbf{Define-se:}\\
+$E_{k,m}^{d_i} = \{ x | x \in E_{k,m}$ e todos os algarismos de x são diferente de $d_i$ $\}$\\
+
+Por construção $E_{k,m}^{d_i} \subset E_{k,m}$, logo sabe-se enumerar explicitamente os elementos de $E_{k,m}^{d_i}$ por hipótese indutiva.\\
+
+Façamos:\\
+ $E_{k+1,m} = \bigcup_{\substack{ i \in \{1,2,\dots,m\}}} \{ x | x = y$ concatenado com $d_i, \forall y \in E_{k,m}^{d_i}  \}$\\
+
+Observar que $x \in N_{k+1,m}$ e que $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq (k+1) ((i \neq j) \rightarrow ( a_i \neq a_j ))$ conforme desejado.\\
 
 
+\subsection{ Algoritmo Resultante }
+\indent 
+Com base na prova por indução em n do $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ podemos construir o seguinte algoritmo:\\
+{\color[rgb]{0,0,1} Numeros} {\color[rgb]{0,0.5,0.5} geraNumeros}( {\color[rgb]{0,0,1} int} n, {\color[rgb]{0,0,1} int} m )\\
+\{\\
+\hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (n == 0)\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{0,m}$;\\
+\hspace*{10mm} $E_{0,m} = \emptyset$;\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $E_{0,m}$;\\
+\hspace*{5mm} \}\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (n == 1)\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{1,m}$;\\
+\hspace*{10mm} $E_{1,m} = \{d_1,d_2,\dots,d_m\}$;\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $E_{1,m}$;\\
+\hspace*{5mm} \}\\
+\hspace*{5mm} {\color[rgb]{0,0.5,0}// Passo Indutivo}\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} else}\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{n,m}$;\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{n-1,m}$;\\
+\hspace*{10mm} $E_{n-1,m} = {\color[rgb]{0,0.5,0.5} geraNumeros}(n-1,m)$;\\
+\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} i {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $m$ {\color[rgb]{0.7,0.3,0} by} 1)\\
+\hspace*{10mm} \{\\
+\hspace*{15mm} $E_{n-1,m}^{d_i} = E_{n-1,m}$ {\color[rgb]{0,0.5,0.5}sem elem. com} $d_i$\\
+\hspace*{15mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} y {\color[rgb]{0.7,0.3,0} in} $E_{n-1,m}^{d_i}$)\\
+\hspace*{15mm} \{\\
+\hspace*{20mm} {\color[rgb]{0,0.5,0.5} add} ({\color[rgb]{0,0.5,0.5} concatena}($y$,$d_i$)) {\color[rgb]{0,0.5,0.5} to} $E_{n,m}$;\\
+\hspace*{15mm} \}\\
+\hspace*{10mm} \}\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $E_{n,m}$;\\
+\hspace*{5mm} \}\\
+\}\\
 
 \subsection{ Comentarios }
 \indent  Primeiro provamos o teorema de que sabe-se enumerar todos estes números.
-Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m-1)...(m - k + 1) números, o que permite contá-los.
+Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m-1)...(m - k + 1) números, o que permite contá-los.\\
 
 
 
@@ -147,8 +219,7 @@ Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m
 \section{Teorema 3}
 
 \subsection{ Enunciado }
-\indent $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.
-
+\indent $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.\\
 
 \subsection{ Prova }
 \indent 
@@ -199,8 +270,10 @@ Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de
 
 \subsection{ Algoritmo Resultante }
 \indent 
+Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ podemos construir o seguinte algoritmo:\\
 {\color[rgb]{0,0,1} Rodadas} {\color[rgb]{0,0.5,0.5} geraRodadas}( {\color[rgb]{0,0,1} int} k, {\color[rgb]{0,0,1} Equipes} E )\\
 \{\\
+\hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
 \hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (k == 0)\\
 \hspace*{5mm} \{\\
 \hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{0}$;\\
@@ -213,6 +286,7 @@ Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de
 \hspace*{10mm} $R_1^{1} = \{(e_1,e_2)\}$;\\
 \hspace*{10mm} {\color[rgb]{0.5,0,1} return} $R^{1}$;\\
 \hspace*{5mm} \}\\
+\hspace*{5mm} {\color[rgb]{0,0.5,0}// Passo Indutivo}\\
 \hspace*{5mm} {\color[rgb]{0.7,0.3,0} else}\\
 \hspace*{5mm} \{\\
 \hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{k}$;\\
@@ -238,9 +312,75 @@ Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de
 \}\\
 
 
-\subsection{ Comentarios }
-\indent Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultrices scelerisque semper. Donec cursus euismod enim eget sodales. Duis sit amet lacinia leo, at tristique libero. Suspendisse eget placerat felis. Nulla non nibh pharetra, sodales mauris et, tristique arcu. Donec placerat ornare convallis. Vestibulum elementum enim eu aliquet faucibus. Donec rutrum orci at erat tempus, ac pellentesque sapien facilisis. Morbi suscipit euismod ligula, vel laoreet ligula euismod in. Phasellus suscipit neque tellus, ut eleifend dui sollicitudin vel. Vivamus ut hendrerit justo. Curabitur vitae massa ullamcorper, ullamcorper metus nec, condimentum purus. Aenean nec lacus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi tincidunt est ut quam molestie convallis.
+\subsection{ Resultados }
+\indent Utilizando o algoritmo a cima construímos um programa que gera as rodadas para $2^k$ equipes, uma vez dado um k. Testamos esse programa coletando informações sobre o tempo de execução para diversos valores de k. Abaixo, segue-se alguns dos principais resultados encontrados:\\
 
+{\color[rgb]{0,0,1}Results for k=0:}\\
+\hspace*{5mm} 1 teams.\\
+\hspace*{5mm} 0 rounds with 0 matches per round.\\
+\hspace*{5mm} 0 total number of matches.\\
+\hspace*{5mm} 3016214 runs in 5s\\
+\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}1.65771e-006s}\\
+{\color[rgb]{0,0.5,0}
+\hspace*{5mm} Rounds generated:\\
+}
+
+{\color[rgb]{0,0,1}Results for k=1:}\\
+\hspace*{5mm} 2 teams.\\
+\hspace*{5mm} 1 rounds with 1 matches per round.\\
+\hspace*{5mm} 1 total number of matches.\\
+\hspace*{5mm} 2012070 runs in 5s\\
+\hspace*{5mm} Average time per run:{\color[rgb]{0.7,0.3,0} 2.485e-006s}\\
+{\color[rgb]{0,0.5,0}
+\hspace*{5mm} Rounds generated:\\
+\hspace*{10mm} Round 1: \{(1,2)\}\\
+}
+
+{\color[rgb]{0,0,1}Results for k=2:}\\
+\hspace*{5mm} 4 teams.\\
+\hspace*{5mm} 3 rounds with 2 matches per round.\\
+\hspace*{5mm} 6 total number of matches.\\
+\hspace*{5mm} 1039078 runs in 5s\\
+\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}4.81196e-006s}\\
+{\color[rgb]{0,0.5,0}
+\hspace*{5mm} Rounds generated:\\
+\hspace*{10mm} Round 1: \{(1,2),(3,4)\}\\
+\hspace*{10mm} Round 2: \{(2,3),(1,4)\}\\
+\hspace*{10mm} Round 3: \{(1,3),(2,4)\}\\
+}
+
+{\color[rgb]{0,0,1}Results for k=3:}\\
+\hspace*{5mm} 8 teams.\\
+\hspace*{5mm} 7 rounds with 4 matches per round.\\
+\hspace*{5mm} 28 total number of matches.\\
+\hspace*{5mm} 461214 runs in 5s\\
+\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}1.0841e-005s}\\
+{\color[rgb]{0,0.5,0}
+\hspace*{5mm} Rounds generated:\\
+\hspace*{10mm} Round 1: \{(1,2),(3,4),(5,6),(7,8)\}\\
+\hspace*{10mm} Round 2: \{(2,3),(1,4),(6,7),(5,8)\}\\
+\hspace*{10mm} Round 3: \{(1,3),(2,4),(5,7),(6,8)\}\\
+\hspace*{10mm} Round 4: \{(2,5),(3,6),(4,7),(1,8)\}\\
+\hspace*{10mm} Round 5: \{(3,5),(4,6),(1,7),(2,8)\}\\
+\hspace*{10mm} Round 6: \{(4,5),(1,6),(2,7),(3,8)\}\\
+\hspace*{10mm} Round 7: \{(1,5),(2,6),(3,7),(4,8)\}\\
+}
+
+{\color[rgb]{0,0,1}Results for k=14:}\\
+\hspace*{5mm}16384 teams.\\
+\hspace*{5mm}16383 rounds with 8192 matches per round.\\
+\hspace*{5mm}134209536 total number of matches.\\
+\hspace*{5mm}1 runs in 55.2969s\\
+\hspace*{5mm}Average time per run: {\color[rgb]{0.7,0.3,0}55.2969s}\\
+
+{\color[rgb]{0,0,1}Results for k=15:}\\
+\hspace*{5mm}32768 teams.\\
+\hspace*{5mm}32767 rounds with 16384 matches per round.\\
+\hspace*{5mm}536854528 total number of matches.\\
+\hspace*{5mm}1 runs in 793.641s\\
+\hspace*{5mm}Average time per run: {\color[rgb]{0.7,0.3,0}793.641s}\\
+
+É de simples verificação que o programa baseado no algoritmo descrito gerou corretamente rodadas para valores de $k$ pequenos ($k \in \{0,1,2,3\}$).\\
 
 
 %-----------------------------------------------------------------------
