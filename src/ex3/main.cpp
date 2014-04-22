@@ -10,7 +10,7 @@
 #include "Team.h"
 #include "Round.h"
 
-#define MAX_K 20
+#define MAX_K 13
 #define MAX_K_TO_PRINT_RESULTS 3
 
 using namespace std;
