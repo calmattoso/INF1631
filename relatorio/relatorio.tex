@@ -147,9 +147,53 @@ Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m
 \subsection{ Enunciado }
 \indent $\mathbf{Teorema}$ $\mathbf{3}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.
 
-\subsection{ Prova }
-\indent Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultrices scelerisque semper. Donec cursus euismod enim eget sodales. Duis sit amet lacinia leo, at tristique libero. Suspendisse eget placerat felis. Nulla non nibh pharetra, sodales mauris et, tristique arcu. Donec placerat ornare convallis. Vestibulum elementum enim eu aliquet faucibus. Donec rutrum orci at erat tempus, ac pellentesque sapien facilisis. Morbi suscipit euismod ligula, vel laoreet ligula euismod in. Phasellus suscipit neque tellus, ut eleifend dui sollicitudin vel. Vivamus ut hendrerit justo. Curabitur vitae massa ullamcorper, ullamcorper metus nec, condimentum purus. Aenean nec lacus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi tincidunt est ut quam molestie convallis.
 
+\subsection{ Prova }
+\indent 
+
+\textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
+
+\textit{\textbf{Teorema 3 (0):} (Caso Degenerado)}\\
+$ k=0 \rightarrow n=2^0=1$ equipe\\
+Conjunto de Equipes $E = \{e_1\}$\\
+Não há equipes suficiente para montar nenhum jogo. Como não é possível montar nenhum jogo, não é possível montar nenhuma rodada. Logo: 0 rodadas são possíveis de serem formadas.\\
+Conjunto de Rodadas $R^0 = \emptyset$\\
+Número de rodadas $= 1 = 2^0-1 = (n-1)$\\
+
+\textit{\textbf{Teorema 3 (1):}}\\
+$ k=1 \rightarrow n=2^1=2$ equipes\\
+Conjunto de Equipes $E = \{e_1,e_2\}$\\
+Há somente duas equipes. Logo, podemos montar o seguinte conjunto de rodadas:\\
+Conjunto de Rodadas $R^1 = \{R_1\}$\\
+ $R^1_1 =\{(e_1,e_2)\}$\\
+Número de rodadas $= 1 = 2^1-1 = (n-1)$\\
+Com essa configuração de rodadas, $e_1$ joga com $e_2$, satisfazendo a condição de que cada time jogue com todos os outros.\\
+
+\textbf{Teorema do Passo Indutivo:}\\
+
+\textit{\textbf{Teorema 3 (k) $\rightarrow$ Teorema 3 (k+1)}}\\
+Pela hipótese indutiva sabe-se construir o conjunto de rodadas $R^k$ para um número de equipes $n=2^k$.\\
+Deseja-se provar que sabe-se construir o conjunto de rodadas $R^{k+1}$ para um número de equipes $n'=2^{k+1}=2*2^k=2n$.\\
+Sejam o conjunto de equipes:\\
+$E = \{e_1,e_2,\dots,e_{2n}\}$\\
+Separemos dois subconjuntos de E:\\
+$E_1 = \{e_1,e_2,...,e_{n}\}$\\
+$E_2 = \{e_{n+1},e_{n+2},\dots,e_{2n}\}$\\
+Observe que:\\
+$card(E_1) = card(E_2) = n= 2^k$\\
+$E_1 \cup E_2 = E$\\
+$E_1 \cap E_2 = \emptyset$\\
+Pela hipótese indutiva, sabe-se construir as rodadas referentes a $E_1$ e $E_2$, uma vez que em cada time existem exatos $n=2^k$ equipes. Faltam apenas as partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$ \\
+Denotemos, respectivamente, o conjunto de rodadas relativos a $E_1$ e $E_2$ como $R^{k,{E_1}}$ e $R^{k,{E_2}}$ e cada rodada como $R_i^{k,{E_1}}$ e $R_j^{k,{E_2}}$ para $1 \leq i,j \leq (n-1)$.\\
+Montemos o conjunto de rodadas $R^{k+1}$ como $R^{k+1}=\{R_1^{k+1},R_2^{k+1},\dots,R_{2n-1}^{k+1}\}$ tal que:\\
+Primeiras n-1 rodadas (Partidas que ocorrem internamente entre equipes de $E_1$ e $E_2$):\\
+ $R_i^{k+1} = R_i^{k,{E_1}} \cup R_i^{k,{E_2}}$ $ \forall i \in \mathbb{N},1 \leq i \leq (n-1)$\\
+Próximas n rodadas (partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$):\\
+$R_{n+\tau}^{k+1} = \{ ( e_{1+((j+\tau)\%n)},e_{j+n}) \in \mathbb{E}^2 |  j \in \mathbb{N},1 \leq j \leq n$ $\}$ $ \forall \tau \in \mathbb{Z},0 \leq \tau \leq (n-1)$\\
+Observar que $e_{1+((j+\tau)\%n)} \in E_1$ e $e_{j+n} \in E_2$ para todos os valores de $j$ e $\tau$ nos limites estipulados.\\
+Notar ainda que dado um $j$, variando-se $\tau$ nos limites estipulados, têm-se que $e_{j+n} \in E_2$ joga com todos os elementos de $E_1$ e que variar $j$ nos limites estipulados equivale a percorrer-se os elementos de $E_2$.\\
+Uma vez que todo elemento de $E_1$ e $E_2$ jogou com os próprios elementos de seu respectivo conjunto assim como com todos os elemntos do outro conjunto e como $E_1 \cup E_2 = E$ então $R^{k+1}$ é um conjunto de rodadas que satisfaz o teorema. Observar que $card(R^{k+1}) = 2n-1$, conforme esperado.\\
+Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de equipes.\\
 
 
 \subsection{ Comentarios }
