@@ -22,7 +22,7 @@ int main( int argc, const char * argv[] )
 
   #ifdef TIME
     CPUTimer timer;
-    int runs = 0;
+    unsigned int runs = 0;
   #endif
 
   for(int x = -n_itrs; x < n_itrs; ++x)
@@ -44,19 +44,21 @@ int main( int argc, const char * argv[] )
         #ifdef SHOW_QS
           quoc = q.FindFor( k );
         #else
-          q.FindFor( k )
+          q.FindFor( k );
         #endif
 
         #ifdef TIME
           timer.stop();
+          
+          runs++;
 
-          std::cout << "\tTrial time: " << timer.getCPUCurrSecs() << "s" << std::endl
+          std::cout << "\tTrial time: " << timer.getCPUCurrSecs() << "s" << std::endl;
         #endif
         #ifdef SHOW_QS
-          std::cout << quoc << std::endl;
+          std::cout << "\tQuocient: " << quoc << std::endl;
         #endif        
 
-        runs++;
+       
       }      
     }
 

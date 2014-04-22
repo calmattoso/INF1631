@@ -17,8 +17,8 @@ mpz_class Quociente::FindFor( unsigned long k )
 {
   
   /* Hack para deixar o algoritmo mais direto. */
-  if( q.size() >= q.capacity() - 2 )
-    q.resize( q.size() * 1.5 , 0 );
+  if( largestK >= q.capacity() - 2 )
+    q.resize( q.capacity() * 1.5 , 0 );
 
   /*
    * Caso Base
