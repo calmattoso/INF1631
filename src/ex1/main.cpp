@@ -11,7 +11,11 @@
 
 int main( int argc, const char * argv[] )
 {
-  int n_itrs = MAX;  
+  int n_itrs = MAX;
+  
+  #ifdef SHOW_QS
+    mpz_class quoc;
+  #endif  
 
   if( argc > 1 )
     n_itrs = atoi( argv[1] );
@@ -20,8 +24,7 @@ int main( int argc, const char * argv[] )
     CPUTimer timer;
     int runs = 0;
   #endif
-    
-    
+
   for(int x = -n_itrs; x < n_itrs; ++x)
     for(int y = -n_itrs; y < n_itrs; ++y)
     {
@@ -30,30 +33,35 @@ int main( int argc, const char * argv[] )
 
       Quociente q( x , y ) ;
 
-      #ifdef TIME
-        timer.start();
-      #endif
-      
       for(int k = 1 ; k < n_itrs; ++k)
       {
-        #ifdef SHOW_QS
-          mpz_class quoc = q.FindFor( k );
+        std::cout << "x[" << x << "] y[" << y << "] k[" << k << "]\n";
 
-          std::cout << quoc << std::endl;
+        #ifdef TIME
+          timer.start();
+        #endif
+
+        #ifdef SHOW_QS
+          quoc = q.FindFor( k );
         #else
           q.FindFor( k )
         #endif
 
-        runs++;
-      }
+        #ifdef TIME
+          timer.stop();
 
-      #ifdef TIME
-        timer.stop();
-      #endif
+          std::cout << "\tTrial time: " << timer.getCPUCurrSecs() << "s" << std::endl
+        #endif
+        #ifdef SHOW_QS
+          std::cout << quoc << std::endl;
+        #endif        
+
+        runs++;
+      }      
     }
 
   #ifdef TIME
-    std::cout << "Total time: " << timer.getCPUTotalSecs() << "s" << std::endl;
+    std::cout << "\n\nTotal time: " << timer.getCPUTotalSecs() << "s" << std::endl;
     std::cout << "Avg. time : " << timer.getCPUTotalSecs()/runs << "s" << std::endl;
   #endif
 

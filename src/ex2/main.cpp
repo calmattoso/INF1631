@@ -15,7 +15,8 @@
 int main( int argc, const char * argv[] )
 {
   Combinatorics c;
-  unsigned int m_itrs = 15, k_itrs = 5;  
+  unsigned int m_beg = 1 , m_end = 15,
+               k_beg = 1 , k_end = 5  ;  
 
   #ifdef TIME
     CPUTimer timer;
@@ -24,10 +25,13 @@ int main( int argc, const char * argv[] )
     double maxTrialTime = 0.0;
   #endif
 
-  if( argc >= 3 )
-  {
-    m_itrs = atoi( argv[1] );
-    k_itrs = atoi( argv[2] );
+  if( argc >= 5 )
+  { 
+    m_beg = atoi( argv[1] );
+    m_end = atoi( argv[2] );
+
+    k_beg = atoi( argv[3] );
+    k_end = atoi( argv[4] );
   }
 
   /* 
@@ -37,11 +41,11 @@ int main( int argc, const char * argv[] )
    *    have to be regenerated all the way to the base case for a given (m).
    */
 
-  for(unsigned int m = 1; m <= m_itrs; m++)
+  for(unsigned int m = m_beg; m <= m_end; m++)
   {
     c.SetM( m );
 
-    for(unsigned int k = 1; k <= m && k <= k_itrs; k++)
+    for(unsigned int k = k_beg; k <= m && k <= k_end; k++)
     {
       c.SetK( k );
 
@@ -55,8 +59,15 @@ int main( int argc, const char * argv[] )
 
       #ifdef TIME
         timer.stop();
+      #endif
 
-        runs++;
+      std::cout << "\t#numbers: " << numbers.size() << std::endl;  
+
+      #ifdef TIME
+        if( timer.getCPUCurrSecs() > 0.0 )
+          runs++;
+
+        std::cout << "\tTrial time: " << timer.getCPUCurrSecs() << "s" << std::endl;
 
         if( timer.getCPUCurrSecs() > maxTrialTime )
         {
@@ -66,18 +77,22 @@ int main( int argc, const char * argv[] )
         }
       #endif
 
-      std::deque< Number >::iterator itr;
+      #ifdef SHOW_NUMBERS
+        std::deque< Number >::iterator itr;
 
-      for(itr = numbers.begin(); itr != numbers.end(); ++itr)
-        std::cout << "\t" << itr->ToString() << std::endl;
+        for(itr = numbers.begin(); itr != numbers.end(); ++itr)
+          std::cout << "\t" << itr->ToString() << std::endl;
 
-      std::cout << "\n";
+        std::cout << "\n";
+      #endif
     }    
   }
 
   #ifdef TIME
+    runs = (( runs == 0 ) ? 1 : runs );
+
     std::cout << "\nTotal time: " << timer.getCPUTotalSecs() << "s" << std::endl;
-    std::cout << "Avg. time : " << timer.getCPUTotalSecs()/runs << "s" << std::endl;
+    std::cout << "Avg. time ( without 0s ) : " << timer.getCPUTotalSecs()/runs << "s" << std::endl;
     std::cout << "Max. trial time ( m[" << maxM << "] k[" << maxK << "] ) : " << maxTrialTime << "s" << std::endl;
   #endif
 

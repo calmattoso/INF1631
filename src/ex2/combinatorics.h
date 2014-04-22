@@ -20,8 +20,6 @@ private:
 
 /* HELPERS */
 
-  void GenerateDigits( ) ;
-
   void GenerateNumbers( ull , ull ) ;
 
 public:

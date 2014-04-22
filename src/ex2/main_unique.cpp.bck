@@ -1,0 +1,52 @@
+#include <iostream>
+#include <deque>
+
+#include "number.h"
+#include "combinatorics.h"
+
+#ifdef TIME
+  #include "CPUTimer.h"
+#endif
+
+int main( int argc, const char * argv[] )
+{
+  unsigned int m_itrs = 15, k_itrs = 5;  
+  Combinatorics c;
+
+  #ifdef TIME
+    CPUTimer timer;
+    unsigned int runs = 0;
+  #endif
+
+  if( argc >= 3 )
+  {
+    m_itrs = atoi( argv[1] );
+    k_itrs = atoi( argv[2] );
+  }
+
+  #ifdef TIME
+    timer.start();
+  #endif
+
+    c.SetM( m_itrs );
+    c.SetK( k_itrs );
+    std::deque< Number > numbers = c.GetNumbers();
+
+  #ifdef TIME
+    timer.stop();
+    runs++;
+  #endif
+
+  std::deque< Number >::iterator itr;
+
+  for(itr = numbers.begin(); itr != numbers.end(); ++itr)
+    std::cout << "\t" << itr->ToString() << std::endl;
+
+  #ifdef TIME
+    std::cout << "\nTotal time: " << timer.getCPUTotalSecs() << "s" << std::endl;
+    std::cout << "Avg. time : " << timer.getCPUTotalSecs()/runs << "s" << std::endl;
+  #endif
+
+
+  return 0;
+}

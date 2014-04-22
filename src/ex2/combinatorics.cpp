@@ -5,34 +5,13 @@
 
 
 Combinatorics::Combinatorics() :
-  k( 0 ),
-  m( 9 )
-{
-  GenerateDigits();
-}
+  k( 0 ), m( 9 )
+{}
 
 Combinatorics::Combinatorics( ull _k , ull _m ) 
 {
   k = _k;
   m = _m;
-
-  /* Generate digits */
-    GenerateDigits();
-}
-
-void Combinatorics::GenerateDigits( )
-{
-  ull start = digits.size();
-
-  digits.resize( m , "" );
-
-  for( ull i = start ; i < m ; ++i )
-  {
-    std::stringstream ss;
-    ss << i + 1;
-
-    digits[i] = ss.str();
-  }
 }
 
 /* 
@@ -60,10 +39,10 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
    */
     if( n == 1 )
     {
-      for( ull digitIdx = 0 ; digitIdx < m ; digitIdx++ )
+      for( unsigned int digit = 1 ; digit <= m ; ++digit )
       {
-        Number digitNumber( digits[ digitIdx ] , n );
-        numbers.push_back( digitNumber );
+        Number digitNumber( digit , n );
+        numbers.push_back( digit );
       }
 
       return;
@@ -101,7 +80,7 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
      *  Apenas geramos números com (n-1) dígitos, caso já não os tenhamos
      *    armazenados em (numbers).
      */
-      if( numbers.empty() || !numbers.empty() && numbers[0].GetLength() < (n-1) )
+      if( numbers.empty() || numbers[0].GetLength() < (n-1) )
         GenerateNumbers( n - 1 , m ) ;
 
     /* 
@@ -110,36 +89,43 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
      *   o novo dígito ao final e introduzindo este novo número
      *   no vetor de números. 
      */
-      std::deque< Number > newNumbers;
+      
 
-      for(std::deque< Number >::iterator it = numbers.begin() ;
-          it != numbers.end() ; ++it )
+      std::deque<Number>::size_type len = numbers.size();
+      for(std::deque<Number>::size_type i = 0 ; i < len ; ++i )
       {
-        Number number = (*it);
+        Number number = numbers[ i ];
 
         /* 
           Checa para cada dígito se o número atual o contém 
             [ segmentação em E^d{i}{ n-1 , m } ] 
         */
-          for(ull digit = 0; digit < m; digit++ )
+          for( unsigned int digit = 1 ; digit <= m ; ++digit )
           {
             /* 
               O número (number) não tem o dígito ( digits[digit] ),
                 logo, o adicionamos ao final
                 [ etada de concatenação do passo indutivo ] 
             */
-              if ( !number.HasDigit( digits[ digit ] ) )
+              if ( !number.HasDigit( digit ))
               {
                 Number newNumber( number , number.GetLength() + 1 );
-                newNumber.AppendDigit( digits[ digit ] );
+                newNumber.AppendDigit( digit );
 
-                newNumbers.push_back( newNumber ) ;
+                /*
+                  Imediatamente adiciona-se o número ao vetor que é
+                   "retornado". 
+                 */
+                numbers.push_back( newNumber ) ;
               }
           }
       }
 
-    /* Coloca em numbers os novos números gerados */
-      numbers.assign( newNumbers.begin() , newNumbers.end() );
+    /* Remove os números de n-1 dígitos que tínhamos em (numbers).
+       Otimização em termos de implementação para que não seja 
+         necessário gerar vários conjuntos de números que teriam que
+         ser copiados e deletados.  */
+      numbers.erase( numbers.begin() , numbers.begin() + len );
 
     /* Ao final temos E{n,m} em (numbers), como desejado.  */
 }
@@ -163,11 +149,15 @@ void Combinatorics::SetK( ull newK ){
 }
 
 void Combinatorics::SetM( ull newM ){
+
+  /*
+    There's nothing we can do if (m) is changed, so we purge the list
+      of numbers. Everything has to be regenerated.
+  */
+  if( m != newM )
+    numbers.clear();
+
   m = newM ;
-
-  GenerateDigits();
-
-  numbers.clear();
 }
 
 

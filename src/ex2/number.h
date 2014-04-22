@@ -4,9 +4,8 @@
 #include <string>
 #include <set>
 
-#include "../lib/BloomFilter/bloom_filter.hpp"
-
-typedef std::pair< std::string , int > DigitAtPos ;
+/*                   digit       ,  index in #  */
+typedef std::pair< unsigned int , unsigned int > DigitAtPos ;
 
 class Number {
 private:
@@ -25,22 +24,14 @@ private:
   
   unsigned long maxLen;
 
-
-  //bloom_filter filter ;
-
-/* HELPER */
-
-  void SetUpFilter( unsigned int projectedCount = NUMBER_MAX_LEN ,
-                    double falsePositiveRate = 0.01 ) ;
-
 public:
 
   Number( const Number& , unsigned int newMaxLen = 0 );
-  Number( std::string digit = "" , unsigned int maxLen = NUMBER_MAX_LEN  );
+  Number( unsigned int digit = 0 , unsigned int maxLen = NUMBER_MAX_LEN  );
 
-  bool AppendDigit( std::string );
+  bool AppendDigit( unsigned int );
 
-  bool HasDigit( std::string );
+  bool HasDigit( unsigned int );
 
   unsigned int GetLength();
 

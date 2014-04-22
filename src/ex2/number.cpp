@@ -2,6 +2,7 @@
 
 #include <deque>
 #include <iostream>
+#include <sstream>
 
 /* Red black tree of digit and index in number ( assures fast digit detection ) */
 
@@ -11,15 +12,13 @@ Number::Number( const Number& copy , unsigned int newMaxLen )
   this->maxLen = ( ( newMaxLen == 0 ) ? copy.maxLen : newMaxLen ) ;
 }
 
-Number::Number( std::string digit , unsigned int maxLen ) : 
+Number::Number( unsigned int digit , unsigned int maxLen ) : 
   tree( Number::CompareDigits )
 {
   this->maxLen = maxLen ;
 
-  if( !digit.empty() )
+  if( digit > 0 )
     AppendDigit( digit );
-
-  //SetUpFilter( this->maxLen );
 }
 
 bool Number::CompareDigits (  DigitAtPos lhs , DigitAtPos rhs ) 
@@ -27,51 +26,22 @@ bool Number::CompareDigits (  DigitAtPos lhs , DigitAtPos rhs )
   return lhs.first < rhs.first ;
 }
 
-/*
-void Number::SetUpFilter( unsigned int projectedCount ,
-                          double falsePositiveRate )
-{
-  bloom_parameters parameters;
-
-  // How many elements roughly do we expect to insert?
-  parameters.projected_element_count = projectedCount ;
-
-  // Maximum tolerable false positive probability? (0,1)
-  parameters.false_positive_probability = falsePositiveRate ; 
-
-  if (!parameters)
-  {
-    std::cout << "Error in filter parameters." << std::endl;
-    exit(1);
-  }
-
-  parameters.compute_optimal_parameters();
-
-  this->filter = bloom_filter( parameters ) ;
-}
-*/
-
-bool Number::AppendDigit( std::string  digit )
+bool Number::AppendDigit( unsigned int digit )
 {
   unsigned int length = tree.size() + 1 ;
 
   if( length > maxLen )
     return false ;
 
-  DigitAtPos last = make_pair( digit , length );
+  DigitAtPos last = std::make_pair( digit , length );
   tree.insert( last );
 
   return true;
 }
 
-bool Number::HasDigit( std::string digit )
+bool Number::HasDigit( unsigned int digit )
 {
-  DigitAtPos d = make_pair( digit , 0 );
-
-
-  /* Bloom (filter) tells us (digit) is **certainly not** in (number) 
-  if( !filter.contains( digit ) )
-    return false;*/
+  DigitAtPos d = std::make_pair( digit , 0 );
 
   /* The digit might be in the number, so look it up in the tree */
   return ( ( tree.find( d ) != tree.end() ) ? true : false );
@@ -93,16 +63,21 @@ std::string Number::ToString( )
 
   /* Gather each digit and store them at its respective index in (pieces) */
     for( digit = tree.begin() ; digit != tree.end() ; ++digit )
-      pieces[ digit->second - 1 ] = digit->first;
+    {
+      std::stringstream intToString;
+      intToString << digit->first;
+
+      pieces[ digit->second - 1 ] = intToString.str();
+    }
 
   /* Transform (pieces) into a formatted string */
-  for( piece = pieces.begin(); piece != pieces.end() ; ++piece )
-  {
-    output
-      .append( "[" )
-      .append( *piece )
-      .append( "]");
-  }
+    for( piece = pieces.begin(); piece != pieces.end() ; ++piece )
+    {
+      output
+        .append( "[" )
+        .append( *piece )
+        .append( "]");
+    }
 
   return output;
 }
