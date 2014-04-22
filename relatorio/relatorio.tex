@@ -59,6 +59,8 @@
 \fancyhead[C]{Relatório ED $\bullet$ Abril 2014} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
+\usepackage{color}
+
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
@@ -145,7 +147,7 @@ Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m
 \section{Teorema 3}
 
 \subsection{ Enunciado }
-\indent $\mathbf{Teorema}$ $\mathbf{3}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.
+\indent $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.
 
 
 \subsection{ Prova }
@@ -194,6 +196,46 @@ Observar que $e_{1+((j+\tau)\%n)} \in E_1$ e $e_{j+n} \in E_2$ para todos os val
 Notar ainda que dado um $j$, variando-se $\tau$ nos limites estipulados, têm-se que $e_{j+n} \in E_2$ joga com todos os elementos de $E_1$ e que variar $j$ nos limites estipulados equivale a percorrer-se os elementos de $E_2$.\\
 Uma vez que todo elemento de $E_1$ e $E_2$ jogou com os próprios elementos de seu respectivo conjunto assim como com todos os elemntos do outro conjunto e como $E_1 \cup E_2 = E$ então $R^{k+1}$ é um conjunto de rodadas que satisfaz o teorema. Observar que $card(R^{k+1}) = 2n-1$, conforme esperado.\\
 Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de equipes.\\
+
+\subsection{ Algoritmo Resultante }
+\indent 
+{\color[rgb]{0,0,1} Rodadas} {\color[rgb]{0,0.5,0.5} geraRodadas}( {\color[rgb]{0,0,1} int} k, {\color[rgb]{0,0,1} Equipes} E )\\
+\{\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (k == 0)\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{0}$;\\
+\hspace*{10mm} $R^{0} = \emptyset$;\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $R^{0}$;\\
+\hspace*{5mm} \}\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (k == 1)\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{1}$;\\
+\hspace*{10mm} $R_1^{1} = \{(e_1,e_2)\}$;\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $R^{1}$;\\
+\hspace*{5mm} \}\\
+\hspace*{5mm} {\color[rgb]{0.7,0.3,0} else}\\
+\hspace*{5mm} \{\\
+\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{k}$;\\
+\hspace*{10mm} {\color[rgb]{0,0,1} int} $n=2^k$;\\
+\hspace*{10mm} $E_1 = \{e_1,e_2,\dots,e_{\frac{n}{2}}\}$;\\
+\hspace*{10mm} $E_2 = \{e_{{\frac{n}{2}}+1},e_{{\frac{n}{2}}+2},\dots,e_{n}\}$;\\
+\hspace*{10mm} $R^{k-1,{E_1}} = {\color[rgb]{0,0.5,0.5} geraRodadas}(k-1,E_1)$;\\
+\hspace*{10mm} $R^{k-1,{E_2}} = {\color[rgb]{0,0.5,0.5} geraRodadas}(k-1,E_2)$;\\
+\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} i {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
+\hspace*{10mm} \{\\
+\hspace*{15mm} $R_i^{k} = R_i^{k-1,{E_1}} \cup R_i^{k-1,{E_2}}$\\
+\hspace*{10mm} \}\\
+\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} $\tau$ {\color[rgb]{0.7,0.3,0} from} 0 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
+\hspace*{10mm} \{\\
+\hspace*{15mm}  $ R_{{\frac{n}{2}}+\tau}^{k} = \emptyset;$\\
+\hspace*{15mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} $j$ {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
+\hspace*{15mm} \{\\
+\hspace*{20mm} {\color[rgb]{0,0.5,0.5} add} $ ( e_{1+((j+\tau)\%{\frac{n}{2}})},e_{j+{\frac{n}{2}}})$ {\color[rgb]{0,0.5,0.5} to} $ R_{{\frac{n}{2}}+\tau}^{k}$;\\
+\hspace*{15mm} \}\\
+\hspace*{10mm} \}\\
+\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $R^{k}$;\\
+\hspace*{5mm} \}\\
+\}\\
 
 
 \subsection{ Comentarios }
