@@ -56,6 +56,10 @@ Modo de Uso
       interessante a medida de tempo total. Além disso, podem ser exibidos os qs
       caso tenha-se usado build-ex1-show-quocs.sh .
 
+  !! OBS !!
+    É necessária a instalação da biblioteca GMP (GNU Multiple Precision).
+    No Ubuntu isto pode ser feito com: sudo apt-get install libgmp3-dev
+
 > ex2.exe < m_beg > < m_end > < k_beg > < k_end >
     
     Para cada valor de m de m_beg a m_end, para cada valor de k de k_beg até 
