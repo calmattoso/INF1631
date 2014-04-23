@@ -133,11 +133,33 @@ Otimizações foram feitas desde que não obsfuscassem as induções que origina
 \section{Teorema 1}
 
 \subsection{ Enunciado }
-\indent  $\mathbf{Teorema}$ $\mathbf{1}$ $x^n - y^n$ é divisível por x - y para quaisquer x e y inteiros e todos o valores de n inteiros e maiores que zero.
+\indent  $\mathbf{Teorema}$ $\mathbf{1}$ : $x^n - y^n$ é divisível por x - y para quaisquer x e y inteiros e todos o valores de n inteiros e maiores que zero.
 
 
 \subsection{ Prova }
-\indent Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultrices scelerisque semper. Donec cursus euismod enim eget sodales. Duis sit amet lacinia leo, at tristique libero. Suspendisse eget placerat felis. Nulla non nibh pharetra, sodales mauris et, tristique arcu. Donec placerat ornare convallis. Vestibulum elementum enim eu aliquet faucibus. Donec rutrum orci at erat tempus, ac pellentesque sapien facilisis. Morbi suscipit euismod ligula, vel laoreet ligula euismod in. Phasellus suscipit neque tellus, ut eleifend dui sollicitudin vel. Vivamus ut hendrerit justo. Curabitur vitae massa ullamcorper, ullamcorper metus nec, condimentum purus. Aenean nec lacus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi tincidunt est ut quam molestie convallis.
+\indent A prova é feita por indução matemática utilizando k como parâmetro de indução. O \textit{teorema 1} pode ser enunciado:\\
+
+\textit{\textbf{Teorema 1 (k):}} $x^k-y^k $ é divisível por $x-y$ para quaisquer x e y inteiros e todos os valores de k inteiros e maiores que zero.\\
+
+\textbf{Teorema do Caso Base:}\\
+
+\textit{\textbf{Teorema 1 (1):}}\\
+Seja k=1 (o menor valor para o qual k tem que ser verdade). Nesse caso temos que provar que x-y é divisível por x-y para qualquer valor de x e y. O que é trivialmente verdade, sendo o quociente, $q_1$, igual a 1.\\
+
+\textbf{Teorema do Passo Indutivo:}\\
+
+\textit{\textbf{Teorema 1 (k) $\rightarrow$ Teorema 1 (k+1)}}\\
+Desejamos provar que se o teorema 1 é verdade para um k fixo, isto é, podemos assumir que: $x^k-y^k=q_k*(x-y)$, onde $q_k$ é um inteiro, então é possível mostrar que $x^{k+1}+y^{k+1}=q_{k+1}*(x-y)$ para algum $q_{k+1}$ inteiro. Ou seja, temos mostrar que é verdade também para k+1. Isto é, que podemos obter $q_{k+1}$ inteiro a partir de $q_k$ se o teorema 1 é verdade para k.\\
+
+Como:\\
+$x^{k+1}-y^{k+1} =\\ x^{k+1}-x^k*y + x^k*y - y^{k+1} =\\ x^k*(x-y)+y*(x^k-y^k)$\\
+
+Como, pela hipótese indutiva, temos que $x^k-y^k = q_k * (x-y)$, podemos escrever:\\
+$x^{k+1}-y^{k+1} =\\ x^k*(x-y)+y*(x^k-y^k) =\\ x^k*(x-y) + y * q_k * (x-y) =\\ (x^k+y*q_k)*(x-y)$\\
+
+Como x é inteiro, $x^k$ é inteiro. Como y e $q+ k$ são inteiros seu produto também é inteiro. Portanto, $(x^k + y*q_k)$ é inteiro e $q_{k+1} = (x^k+y*q_k)$ é inteiro, ou seja: $x^{k+1}-y^{k+1} = (x^k+y*q_k)*(x-y) = q_{k+1}*(x-y)$\\
+
+Assim: $q_{k+1}= (x^k+y*q_k)$\\
 
 \subsection{ Algoritmo Resultante }
 \indent Com base na prova por indução, pode-se extrair um algoritmo para determinar Q[k], dados x, y e k.
