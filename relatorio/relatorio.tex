@@ -430,7 +430,9 @@ Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{
 \hspace*{5mm}1 runs in 793.641s\\
 \hspace*{5mm}Average time per run: {\color[rgb]{0.7,0.3,0}793.641s}\\
 
-É de simples verificação que o programa baseado no algoritmo descrito gerou corretamente rodadas para valores de $k$ pequenos ($k \in \{0,1,2,3\}$).\\
+É de simples verificação que o programa baseado no algoritmo descrito gerou corretamente rodadas para valores de $k$ pequenos ($k \in \{0,1,2,3\}$). Porém, como o número de partidas cresce exponencialmente, para valores de k maiores que 3 não é prático avaliar diretamente a saída do programa manualmente.\\
+
+Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528 jogos) devido ambas falta de memória e tempo de execução alto. Uma vez que para k=15 levou-se aproximadamente 13 minutos para calcular-se a resposta (em comparação a aproximadamente 1 minuto necessário para k=14) é razoável estimar que para k=16 levaria-se algumas horas e para k=17 levaria-se mais de um dia. Além disso o programa possui um custo alto de memória devido ao alto número de partidas envolvidas. Para k=14 já são necessários mais de 2GB de memória disponível.\\
 
 
 %-----------------------------------------------------------------------
