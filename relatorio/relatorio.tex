@@ -153,18 +153,25 @@ function q(int x, int y, unsigned int k){
 
 \subsection{ Comentários }
 
-\indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textit{Python} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x, y e k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
+\indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textbf{\textit{Python}} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x}, \textbf{y} e \textbf{k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
 
-\indent Em anexo apresentamos o arquivo \textit{ex1-small.log} que mostra uma série de resultados de nossos testes. Por exemplo:
+\indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:
 
 \begin{lstlisting}
+x[-25] y[-24] k[2]
+  Quocient: -49
+
+x[-25] y[-24] k[24]
+  Quocient: -2218977901950216804906539865046849
+
 x[24] y[23] k[24]
   Quocient: 853485012853782147658915715900735
+
 \end{lstlisting}
 
-\indent Finalmente, fizemos um teste com 364.500.000 iterações, aproximadamente, sendo o tempo total necessário de execução de \textbf{210.094s} ( disponível em \textit{ex1-huge.log} ), evidenciando quão otimizado encontra-se o código. As classes desenvolvidas apresentam um bom nível de otimização, armazenando valores relevantes para consultas futuras.\\
+\indent Finalmente, fizemos um teste com \textbf{364.500.000} iterações, aproximadamente, sendo o tempo total necessário de execução de \textbf{210.094s} ( disponível em \textbf{\textit{ex1-huge.log}} ), evidenciando quão otimizado encontra-se o código. As classes desenvolvidas apresentam um bom nível de otimização, armazenando valores relevantes para consultas futuras.\\
 
-\indent Como é necessário saber diferentes potências de \textbf{x}, a classe de exponenciação lembra-se das já calculadas. Além disso, como é necessário saber valores passados de quocientes, a classe que implementa o algoritmo lembra-se de quocientes passados (dados x e y).
+\indent Como é necessário saber diferentes potências de \textbf{x}, a classe de exponenciação lembra-se das já calculadas. Além disso, como é necessário saber valores passados de quocientes, a classe que implementa o algoritmo lembra-se de quocientes passados (dados \textbf{x} e \textbf{y}).
 
 
 
