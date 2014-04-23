@@ -69,9 +69,11 @@
 \lstset{frame=tb,
   language=C,
   aboveskip=3mm,
-  belowskip=3mm,
+  belowskip=0mm,
+  belowcaptionskip=0mm,
+  numbers=left,
   showstringspaces=false,
-  columns=flexible,
+  columns=fullflexible,
   basicstyle={\small\ttfamily},
   numbers=none,
   numberstyle=\tiny\color{gray},
@@ -80,7 +82,7 @@
   stringstyle=\color{mauve},
   breaklines=true,
   breakatwhitespace=true
-  tabsize=2
+  tabsize=2,
 }
 
 %----------------------------------------------------------------------------------------
@@ -287,7 +289,7 @@ Com base na prova por indução em n do $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf
 
 \indent Nas saídas disponibilizadas, os diferentes números gerados são exibidos através da sequência de dígitos que os formam, sendo estes delimitados cada um por colchetes. Além disso, para cada instância de teste, à direita de \textbf{m} e \textbf{k} são apresentados seus valores, também estes delimitados por colchetes.\\
 
-\indent Em anexo disponibilizamos o arquivo \textbf{\textit{ex2-small.log}} que apresenta o resultado da execução do algortimo para \textbf{m} de \textbf{1 até 9} e \textbf{k} de \textbf{1 até 9}, possibilitando checar se a implementação funciona pelo menos para pequenos valores. Abaixo disponibilizamos um resultado para visualização.
+\indent Em anexo disponibilizamos o arquivo \textbf{\textit{ex2-small.log}} que apresenta o resultado da execução do algortimo para \textbf{m} de \textbf{1 até 9} e \textbf{k} de \textbf{1 até 9}, possibilitando checar se a implementação funciona pelo menos para pequenos valores. Abaixo disponibilizamos um resultado para visualização.\\\\
 
 \begin{lstlisting}
 m[ 3 ] k[ 3 ]
@@ -299,9 +301,7 @@ m[ 3 ] k[ 3 ]
 [2][3][1]
 [3][1][2]
 [3][2][1]
-
 \end{lstlisting}
-
 \indent Para valores de \textbf{m} maiores que 9, apresentamos alguns testes no arquivo \textbf{\textit{ex2-small-2.log}}. Abaixo, alguns resultados para o caso de m = 20 e k = 4:
 
 \begin{lstlisting}
@@ -318,7 +318,6 @@ m[ 20 ] k[ 4 ]
   [20][19][18][16]
   [20][19][18][17]
 \end{lstlisting}
-
 \indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito.\\
 
 \begin{tabular}{llll}
@@ -517,10 +516,16 @@ Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528
 
 
 %-----------------------------------------------------------------------
+\newpage
 \section{Conclusão}
-\indent	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ultrices scelerisque semper. Donec cursus euismod enim eget sodales. Duis sit amet lacinia leo, at tristique libero. Suspendisse eget placerat felis. Nulla non nibh pharetra, sodales mauris et, tristique arcu. Donec placerat ornare convallis. Vestibulum elementum enim eu aliquet faucibus. Donec rutrum orci at erat tempus, ac pellentesque sapien facilisis. Morbi suscipit euismod ligula, vel laoreet ligula euismod in. Phasellus suscipit neque tellus, ut eleifend dui sollicitudin vel. Vivamus ut hendrerit justo. 
-\\
-\indent Curabitur vitae massa ullamcorper, ullamcorper metus nec, condimentum purus. Aenean nec lacus metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi tincidunt est ut quam molestie convallis.
+\indent	Todos os algoritmos resultantes das provas por indução conseguiram resolver os problemas apresentados. Contudo, para valores de seus respectivos parâmetros que produzam grandes resultados, todos os algoritmos acabaram pecando em termos de desempenho, principalmente em uso de memória.\\
+
+\indent O primeiro foi o mais eficiente e de mais fácil otimização, tendo sido ainda assim necessário o uso de uma biblioteca externa para manipulação de grandes inteiros.\\
+
+\indent Quanto ao segundo e terceiro, as operações matemáticas utilizadas na pseudocódigo são aquelas básicas de conjuntos, principalmente união, e assim constituem-se certas ineficiências inerentes às estruturas utilizadas pelo algoritmo. Em termos de memória, são gerados milhões de valores já para pequenos parâmetros, o que acaba explodindo seu uso. Sendo então necessário o uso memória virtual, o desempenho do programa sofre significativamente.\\
+
+
+\indent 
 
 
 %-----------------------------------------------------
