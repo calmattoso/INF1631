@@ -186,6 +186,8 @@ function q(int x, int y, unsigned int k){
 
 \indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textbf{\textit{Python}} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x}, \textbf{y} e \textbf{k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
 
+\indent É importante ressaltar que em casos para os quais \textbf{x == y}, o algoritmo retornará valores diferentes dos esperados, apresentando comportamento não determinado. Contudo, dados o teorema enunciado e sua respectiva prova, não é incumbência do algoritmo desta derivado tratar tais casos. Assim, chamadas ao algoritmo devem ser feitas apenas para \textbf{x != y}.\\
+
 \indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:\\
 
 \begin{lstlisting}
@@ -534,7 +536,7 @@ Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528
 
 \indent O primeiro foi o mais eficiente e de mais fácil otimização, tendo sido ainda assim necessário o uso de uma biblioteca externa para manipulação de grandes inteiros.\\
 
-\indent Quanto ao segundo e terceiro, as operações matemáticas utilizadas na pseudocódigo são aquelas básicas de conjuntos, principalmente união, e assim constituem-se certas ineficiências inerentes às estruturas utilizadas pelo algoritmo. Em termos de memória, são gerados milhões de valores já para pequenos parâmetros, o que acaba explodindo seu uso. Sendo então necessário o uso memória virtual, o desempenho do programa sofre significativamente.\\
+\indent Quanto ao segundo e terceiro, as operações matemáticas utilizadas na pseudocódigo são aquelas básicas de conjuntos, principalmente união, e assim constituem-se certas ineficiências inerentes às estruturas utilizadas pelo algoritmo. Em termos de memória, são gerados milhões de valores já para pequenos parâmetros, o que acaba explodindo seu uso. Sendo então necessário o uso de bastante memória virtual (armazenada no HDD), o desempenho do programa sofre significativamente.\\
 
 
 \indent 
