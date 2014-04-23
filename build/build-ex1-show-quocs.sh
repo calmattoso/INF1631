@@ -1,1 +1,1 @@
-g++ -w -O3 -DTIME -DSHOW_QS -o ../bin/ex1 ../src/ex1/*.cpp ../src/lib/CPUTimer/CPUTimer.cpp -lgmpxx -lgmp
+g++ -w -O3 -DTIME -DSHOW_QS -o ../bin/ex1-show-quocs ../src/ex1/*.cpp ../src/lib/CPUTimer/CPUTimer.cpp -lgmpxx -lgmp

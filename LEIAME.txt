@@ -5,7 +5,8 @@ Estrutura de Diretórios
 -----------------------
   /bin   - para onde serão compilados cada exs. caso usem-se os 
            scripts de compilação
-  /build - scripts de compilação utilizando g++
+  /build - scripts de compilação utilizando g++ ( compile-all.sh gera
+           todos os executáveis )
   /logs  - arquivos com saídas para os testes que fizemos;
            arquivos com huge no final indicam resultados de testes
            para maiores valores dos parâmetros
