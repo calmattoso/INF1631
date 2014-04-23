@@ -131,14 +131,14 @@ Otimizações foram feitas desde que não obsfuscassem as induções que origina
 
 As provas dos teoremas se baseiam principalmente no princípio de indução matemática de Peano, conforme escrito abaixo:\\
 
-Se $\phi$ é um predicado unário tal que: $\phi$(0) é verdade, epara todo número natural n, se $\phi$(n) é verdadeiro, então $\phi$(S(n)) também o é, então 2q$\phi$(n) é verdadeiro para todo número natural n.\\
+Se $\phi$ é um predicado unário tal que: $\phi$(0) é verdade, e para todo número natural n, se $\phi$(n) é verdadeiro, então $\phi$(S(n)) também o é, então 2q$\phi$(n) é verdadeiro para todo número natural n.\\
 
 Assim, para provar-se um teorema para diversos valores em um domínio discreto, basta provar-se os chamados Teoremas de Caso Base, em que prova-se o teorema para valores específicos e usualmente de simples entendimento do domínio, assim como os Teoremas do Passo Indutivo, em que prova-se que caso o teorema seja verdade para algum valor do domínio, o teorema também será verdade para outros valores do domínio diferentes do da hipótese.\\
 
 Dessa forma, segue-se a desenvolvimento de cada um dos problemas solicitados.\\
 
 %------------------------------------------------
-
+\newpage
 \section{Teorema 1}
 
 \subsection{ Enunciado }
@@ -186,7 +186,7 @@ function q(int x, int y, unsigned int k){
 
 \indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textbf{\textit{Python}} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x}, \textbf{y} e \textbf{k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
 
-\indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:
+\indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:\\
 
 \begin{lstlisting}
 x[-25] y[-24] k[2]
@@ -308,7 +308,9 @@ m[ 3 ] k[ 3 ]
 [2][3][1]
 [3][1][2]
 [3][2][1]
+
 \end{lstlisting}
+
 \indent Para valores de \textbf{m} maiores que 9, apresentamos alguns testes no arquivo \textbf{\textit{ex2-small-2.log}}. Abaixo, alguns resultados para o caso de m = 20 e k = 4:
 
 \begin{lstlisting}
@@ -324,7 +326,9 @@ m[ 20 ] k[ 4 ]
   [20][19][18][15]
   [20][19][18][16]
   [20][19][18][17]
+
 \end{lstlisting}
+
 \indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito.\\
 
 \begin{tabular}{llll}
@@ -353,6 +357,7 @@ m[ 20 ] k[ 4 ]
 \indent O algoritmo implementado acaba necessitando de grandes quantidades de memória, o que acaba sendo um considerável gargalo em sua execução. Para os maiores casos apresentados abaixo, o algoritmo consumia em torno de \textbf{40GB}, fazendo uso principalmente de memória virtual montada no HDD, afetando seu desempenho.
 
 %-----------------------------------------------------------------------
+\newpage
 \section{Teorema 3}
 
 \subsection{ Enunciado }
