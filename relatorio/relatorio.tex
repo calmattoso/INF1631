@@ -56,7 +56,7 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Relatório ED $\bullet$ Abril 2014} % Custom header text
+\fancyhead[C]{PUC-Rio - Relatório de INF1631 - Estruturas Discretas $\bullet$ Abril 2014} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 \usepackage{color}
@@ -89,7 +89,7 @@
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
-\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Prova, implementação e análise de problemas selecionados}} % Article title
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Prova, Implementação e Análise de Problemas Selecionados}} % Article title
 
 \author{
 \large
@@ -106,16 +106,6 @@
 
 \thispagestyle{fancy} % All pages have headers and footers
 
-%----------------------------------------------------------------------------------------
-%	ABSTRACT
-%----------------------------------------------------------------------------------------
-
-\begin{abstract}
-
-\noindent 
-Neste projeto procuramos provar e implementar soluções para os problemas apresentados em aula da forma mais clara possível.
-Otimizações foram feitas desde que não obsfuscassem as induções que originam os algoritmos.
-\end{abstract}
 
 %----------------------------------------------------------------------------------------
 %	ARTICLE CONTENTS
@@ -127,11 +117,11 @@ Otimizações foram feitas desde que não obsfuscassem as induções que origina
 
 \lettrine[nindent=0em,lines=3]{A}presentou-se três problemas com o objetivo de desenvolver-se códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar-se o desempenho das implementações destes algoritmos com respeito ao tempo de CPU.\\
 
-É possível enunciar-se um teorema correspondente para cada um dos problemas descritos, o que permite descrever-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática, montar um algoritmo com base neles e apresentar dados a respeito do tempo de execução dos algoritmos para diversas instâncias. Dessa forma, dividiu-se cada um dos três problemas em três teoremas, cada um com seu enunciado, prova,  algoritmo resultate e comenários e resultados.\\
+É possível enunciar-se um teorema correspondente para cada um dos problemas descritos, o que permite descrever-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática, montar um algoritmo com base neles e apresentar dados a respeito do tempo de execução dos algoritmos para diversas instâncias. Dessa forma, discriminamos para cada um dos três problemas seus teoremas correspondentes, cada um com seu enunciado, prova,  algoritmo resultate, comentários e resultados.\\
 
-As provas dos teoremas se baseiam principalmente no princípio de indução matemática de Peano, conforme escrito abaixo:\\
+As provas dos teoremas se baseiam principalmente no princípio de indução matemática de Peano, conforme descrito abaixo:\\
 
-Se $\phi$ é um predicado unário tal que: $\phi$(0) é verdade, e para todo número natural n, se $\phi$(n) é verdadeiro, então $\phi$(S(n)) também o é, então 2q$\phi$(n) é verdadeiro para todo número natural n.\\
+Se $\phi$ é um predicado unário tal que: $\phi$(0) é verdade, e para todo número natural n, se $\phi$(n) é verdadeiro, então $\phi$(S(n)) também o é, então $\phi$(n) é verdadeiro para todo número natural n.\\
 
 Assim, para provar-se um teorema para diversos valores em um domínio discreto, basta provar-se os chamados Teoremas de Caso Base, em que prova-se o teorema para valores específicos e usualmente de simples entendimento do domínio, assim como os Teoremas do Passo Indutivo, em que prova-se que caso o teorema seja verdade para algum valor do domínio, o teorema também será verdade para outros valores do domínio diferentes do da hipótese.\\
 
@@ -139,7 +129,7 @@ Dessa forma, segue-se a desenvolvimento de cada um dos problemas solicitados.\\
 
 %------------------------------------------------
 \newpage
-\section{Teorema 1}
+\section{Problema 1}
 
 \subsection{ Enunciado }
 \indent  $\mathbf{Teorema}$ $\mathbf{1}$ : $x^n - y^n$ é divisível por x - y para quaisquer x e y inteiros e todos o valores de n inteiros e maiores que zero.
@@ -158,7 +148,7 @@ Seja k=1 (o menor valor para o qual k tem que ser verdade). Nesse caso temos que
 \textbf{Teorema do Passo Indutivo:}\\
 
 \textit{\textbf{Teorema 1 (k) $\rightarrow$ Teorema 1 (k+1)}}\\
-Desejamos provar que se o teorema 1 é verdade para um k fixo, isto é, podemos assumir que: $x^k-y^k=q_k*(x-y)$, onde $q_k$ é um inteiro, então é possível mostrar que $x^{k+1}+y^{k+1}=q_{k+1}*(x-y)$ para algum $q_{k+1}$ inteiro. Ou seja, temos mostrar que é verdade também para k+1. Isto é, que podemos obter $q_{k+1}$ inteiro a partir de $q_k$ se o teorema 1 é verdade para k.\\
+Desejamos provar que se o teorema 1 é verdade para um k fixo, isto é, podemos assumir que: $x^k-y^k=q_k*(x-y)$, onde $q_k$ é um inteiro, então é possível mostrar que $x^{k+1}-y^{k+1}=q_{k+1}*(x-y)$ para algum $q_{k+1}$ inteiro. Ou seja, temos mostrar que é verdade também para k+1. Isto é, que podemos obter $q_{k+1}$ inteiro a partir de $q_k$ se o teorema 1 é verdade para k.\\
 
 Como:\\
 $x^{k+1}-y^{k+1} =\\ x^{k+1}-x^k*y + x^k*y - y^{k+1} =\\ x^k*(x-y)+y*(x^k-y^k)$\\
@@ -171,12 +161,14 @@ Como x é inteiro, $x^k$ é inteiro. Como y e $q+ k$ são inteiros seu produto t
 Assim: $q_{k+1}= (x^k+y*q_k)$\\
 
 \subsection{ Algoritmo Resultante }
-\indent Com base na prova por indução, pode-se extrair um algoritmo para determinar Q[k], dados x, y e k.
+\indent Com base na prova por indução, pode-se extrair o seguinte algoritmo para determinar Q[k], dados x, y e k.
 
 \begin{lstlisting}
 function q(int x, int y, unsigned int k){
+ // Caso Base
   if( k == 1 )
     return 1
+ // Passo Indutivo
   else
     return x^(k-1) + y * q(x , y , k-1)  
 }
@@ -191,13 +183,13 @@ function q(int x, int y, unsigned int k){
 \indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:\\
 
 \begin{lstlisting}
-x[-25] y[-24] k[2]
+x = -25, y = -24, k=2
   Quocient: -49
 
-x[-25] y[-24] k[24]
+x = -25, y = -24, k=24
   Quocient: -2218977901950216804906539865046849
 
-x[24] y[23] k[24]
+x = 24, y = 23, k=24
   Quocient: 853485012853782147658915715900735
 
 \end{lstlisting}
@@ -210,24 +202,25 @@ x[24] y[23] k[24]
 
 %------------------------------------------------
 \newpage
-\section{Teorema 2}
+\section{Problema 2}
 
 \subsection{ Enunciado }
 \indent $\mathbf{Teorema}$ $\mathbf{2}$ O número de números inteiros cujos dígitos pertencem ao conjunto \{1, 2, . . . , m\} de
-K dígitos diferentes é dado pelo produto m.(m - 1)...(m - k + 1).\\
+K dígitos diferentes é dado pelo produto m.(m - 1)...(m - k + 1).
 
-\textbf{Define-se:}\\
+\subsection{ Prova }
+\indent 
+
+Define-se:\\
 $d_x$ := algarismo de valor absoluto x\\
 $N_{n,m}$ := $\{ x | $ $x=a_n \dots a_2a_1$ tal que $a_i \in \{d_1,d_2, \dots ,d_m\}$, o conjunto de dígitos$\}$ = números de n dígitos com dígitos com valor até m.\\
 
 Podemos enunciar o seguinte teorema, válido para todo n e m inteiros, tal que $n,m\geq1$:\\
 
 $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ Sabe-se enumerar explicitamente os elementos do conjunto:\\
-$E_{n,m}$ = $\{ x | $ $x \in N_{n,m}$ e $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq n ((i \neq j) \rightarrow ( a_i \neq a_j ))$ = números de n dígitos com dígitos distintos com valor até m.
+$E_{n,m}$ = $\{ x | $ $x \in N_{n,m}$ e $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq n ((i \neq j) \rightarrow ( a_i \neq a_j ))$ = números de n dígitos com dígitos distintos com valor até m.\\
 
-\subsection{ Prova }
-\indent \textbf{(Prova por indução no parâmetro n)}\\
-
+\textbf{Prova por indução no parâmetro de indução (n):}\\
 \textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
 
 \textit{\textbf{Teorema 2 (0,m):} (Caso Degenerado)}\\
@@ -238,16 +231,15 @@ $E_{0,m}$ não possui elementos, logo podemos enumerar seus elementos como: \{\}
 \textit{\textbf{Teorema 2 (1,m):}}\\
 Na definição de $E_{1,m}$ como $1 \leq i,j \leq 1 \rightarrow i=j$ então $((i \neq j) \rightarrow ( a_i \neq a_j ))$ é sempre verdadeiro.\\
 Logo,  $E_{1,m} = N_{1,m} = \{d_1,d_2,\dots,d_m\}$\\
-Assim podemos enumerar os elementos de  $E_{1,m}$ explicitamente como $\{d_1,d_2,\dots,d_m\}$.\\
+Assim podemos enumerar os elementos de  $E_{1,m}$ explicitamente como: $\{d_1,d_2,\dots,d_m\}$.\\
 
-\textbf{Teorema do Passo Indutivo:}\\
-
+\textbf{Teorema do Passo Indutivo (em n):}\\
 \textit{\textbf{Teorema 2 (k,m) $\rightarrow$ Teorema 2 (k+1,m)}}\\
-Pela hipótese indutiva sabe-se enumerar explicitamente o conjunto $E_{k,m}$ \\
+Pela hipótese indutiva sabe-se enumerar explicitamente o conjunto $E_{k,m}$.\\
 Deseja-se enumerar explicitamente o conjunto  $E_{k+1,m}$ utilizando-se do fato de conhecer-se a enumeração de  $E_{k,m}$.\\
 
-\textbf{Define-se:}\\
-$E_{k,m}^{d_i} = \{ x | x \in E_{k,m}$ e todos os algarismos de x são diferente de $d_i$ $\}$\\
+Define-se:\\
+$E_{k,m}^{d_i} := \{ x | x \in E_{k,m}$ e todos os algarismos de x são diferente de $d_i$ $\}$\\
 
 Por construção $E_{k,m}^{d_i} \subset E_{k,m}$, logo sabe-se enumerar explicitamente os elementos de $E_{k,m}^{d_i}$ por hipótese indutiva.\\
 
@@ -260,6 +252,8 @@ Observar que $x \in N_{k+1,m}$ e que $\forall i,j \in \mathbb{N}, 1 \leq i,j \le
 \subsection{ Algoritmo Resultante }
 \indent 
 Com base na prova por indução em n do $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ podemos construir o seguinte algoritmo:\\
+
+\noindent
 {\color[rgb]{0,0,1} Numeros} {\color[rgb]{0,0.5,0.5} geraNumeros}( {\color[rgb]{0,0,1} int} n, {\color[rgb]{0,0,1} int} m )\\
 \{\\
 \hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
@@ -293,7 +287,7 @@ Com base na prova por indução em n do $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf
 \hspace*{5mm} \}\\
 \}
 
-\subsection{ Comentarios }
+\subsection{ Comentários }
 \indent  Primeiro provamos o teorema de que sabe-se enumerar todos estes números. Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m-1)...(m - k + 1) números.\\
 
 \indent Nas saídas disponibilizadas, os diferentes números gerados são exibidos através da sequência de dígitos que os formam, sendo estes delimitados cada um por colchetes. Além disso, para cada instância de teste, à direita de \textbf{m} e \textbf{k} são apresentados seus valores, também estes delimitados por colchetes.\\
@@ -310,7 +304,6 @@ m[ 3 ] k[ 3 ]
 [2][3][1]
 [3][1][2]
 [3][2][1]
-
 \end{lstlisting}
 
 \indent Para valores de \textbf{m} maiores que 9, apresentamos alguns testes no arquivo \textbf{\textit{ex2-small-2.log}}. Abaixo, alguns resultados para o caso de m = 20 e k = 4:
@@ -322,13 +315,10 @@ m[ 20 ] k[ 4 ]
   [1][2][3][4]
   [1][2][3][5]
   [1][2][3][6]
-  [1][2][3][7]
       ...
-  [20][19][18][14]
   [20][19][18][15]
   [20][19][18][16]
   [20][19][18][17]
-
 \end{lstlisting}
 
 \indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito.\\
@@ -360,10 +350,12 @@ m[ 20 ] k[ 4 ]
 
 %-----------------------------------------------------------------------
 \newpage
-\section{Teorema 3}
+\section{Problema 3}
 
 \subsection{ Enunciado }
-\indent $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.\\
+\indent Seja um conjunto n de equipes $e_1,e_2,\dots,e_n$. Deseja-se construir as n-1 rodadas de um campeonado onde todos jogam contra todos. Assuma que $n=2^k$ para alguma k. Enuncia-se abaixo o teorema de que sabe-se construir as n-1 rodadas de n/2 jogos cada:\\
+
+$\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ Sabe-se construir $2^k - 1$ rodadas de $2^k - 1$ jogos onde cada equipe enfrenta uma equipe diferente em cada rodada.\\
 
 \subsection{ Prova }
 \indent 
@@ -403,18 +395,20 @@ $E_1 \cap E_2 = \emptyset$\\
 Pela hipótese indutiva, sabe-se construir as rodadas referentes a $E_1$ e $E_2$, uma vez que em cada time existem exatos $n=2^k$ equipes. Faltam apenas as partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$ \\
 Denotemos, respectivamente, o conjunto de rodadas relativos a $E_1$ e $E_2$ como $R^{k,{E_1}}$ e $R^{k,{E_2}}$ e cada rodada como $R_i^{k,{E_1}}$ e $R_j^{k,{E_2}}$ para $1 \leq i,j \leq (n-1)$.\\
 Montemos o conjunto de rodadas $R^{k+1}$ como $R^{k+1}=\{R_1^{k+1},R_2^{k+1},\dots,R_{2n-1}^{k+1}\}$ tal que:\\
+
 Primeiras n-1 rodadas (Partidas que ocorrem internamente entre equipes de $E_1$ e $E_2$):\\
  $R_i^{k+1} = R_i^{k,{E_1}} \cup R_i^{k,{E_2}}$ $ \forall i \in \mathbb{N},1 \leq i \leq (n-1)$\\
+
 Próximas n rodadas (partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$):\\
 $R_{n+\tau}^{k+1} = \{ ( e_{1+((j+\tau)\%n)},e_{j+n}) \in \mathbb{E}^2 |  j \in \mathbb{N},1 \leq j \leq n$ $\}$ $ \forall \tau \in \mathbb{Z},0 \leq \tau \leq (n-1)$\\
+
 Observar que $e_{1+((j+\tau)\%n)} \in E_1$ e $e_{j+n} \in E_2$ para todos os valores de $j$ e $\tau$ nos limites estipulados.\\
-Notar ainda que dado um $j$, variando-se $\tau$ nos limites estipulados, têm-se que $e_{j+n} \in E_2$ joga com todos os elementos de $E_1$ e que variar $j$ nos limites estipulados equivale a percorrer-se os elementos de $E_2$.\\
-Uma vez que todo elemento de $E_1$ e $E_2$ jogou com os próprios elementos de seu respectivo conjunto assim como com todos os elemntos do outro conjunto e como $E_1 \cup E_2 = E$ então $R^{k+1}$ é um conjunto de rodadas que satisfaz o teorema. Observar que $card(R^{k+1}) = 2n-1$, conforme esperado.\\
-Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de equipes.\\
+Notar ainda que dado um $j$, variando-se $\tau$ nos limites estipulados, têm-se que $e_{j+n} \in E_2$ joga com todos os elementos de $E_1$ e que variar $j$ nos limites estipulados equivale a percorrer-se os elementos de $E_2$.
+Uma vez que todo elemento de $E_1$ e $E_2$ jogou com os próprios elementos de seu respectivo conjunto assim como com todos os elemntos do outro conjunto e como $E_1 \cup E_2 = E$ então $R^{k+1}$ é um conjunto de rodadas que satisfaz o teorema. Observar que $card(R^{k+1}) = 2n-1$, conforme esperado. Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de equipes.\\
 
 \subsection{ Algoritmo Resultante }
-\indent 
-Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ podemos construir o seguinte algoritmo:\\
+\indent Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ podemos construir o seguinte algoritmo:\\
+\noindent
 {\color[rgb]{0,0,1} Rodadas} {\color[rgb]{0,0.5,0.5} geraRodadas}( {\color[rgb]{0,0,1} int} k, {\color[rgb]{0,0,1} Equipes} E )\\
 \{\\
 \hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
@@ -456,7 +450,7 @@ Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{
 \}\\
 
 
-\subsection{ Resultados }
+\subsection{ Comentários }
 \indent Utilizando o algoritmo a cima construímos um programa que gera as rodadas para $2^k$ equipes, uma vez dado um k. Testamos esse programa coletando informações sobre o tempo de execução para diversos valores de k. Abaixo, segue-se alguns dos principais resultados encontrados:\\
 
 {\color[rgb]{0,0,1}Results for k=0:}\\
@@ -526,18 +520,17 @@ Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{
 
 É de simples verificação que o programa baseado no algoritmo descrito gerou corretamente rodadas para valores de $k$ pequenos ($k \in \{0,1,2,3\}$). Porém, como o número de partidas cresce exponencialmente, para valores de k maiores que 3 não é prático avaliar diretamente a saída do programa manualmente.\\
 
-Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528 jogos) devido ambas falta de memória e tempo de execução alto. Uma vez que para k=15 levou-se aproximadamente 13 minutos para calcular-se a resposta (em comparação a aproximadamente 1 minuto necessário para k=14) é razoável estimar que para k=16 levaria-se algumas horas e para k=17 levaria-se mais de um dia. Além disso o programa possui um custo alto de memória devido ao alto número de partidas envolvidas. Para k=14 já são necessários mais de 2GB de memória disponível.\\
+Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528 jogos) devido ambas falta de memória e tempo de execução alto. Uma vez que para k=15 levou-se aproximadamente 13 minutos para calcular-se a resposta (em comparação a aproximadamente 1 minuto necessário para k=14) é razoável estimar que para k=16 levaria-se algumas horas e para k=17 levaria-se mais de um dia. Além disso o programa possui um custo alto de memória devido ao alto número de partidas envolvidas. Para os últimos valores de k computados o uso de memória atingia valores maiores que 8GB.\\
 
 
 %-----------------------------------------------------------------------
 \newpage
 \section{Conclusão}
-\indent	Todos os algoritmos resultantes das provas por indução conseguiram resolver os problemas apresentados. Contudo, para valores de seus respectivos parâmetros que produzam grandes resultados, todos os algoritmos acabaram pecando em termos de desempenho, principalmente em uso de memória.\\
+\indent Todos os algoritmos resultantes das provas por indução conseguiram resolver os problemas apresentados. Contudo, para valores de seus respectivos parâmetros que produzam grandes resultados, todos os algoritmos acabaram pecando em termos de desempenho, principalmente em uso de memória.\\
 
 \indent O primeiro foi o mais eficiente e de mais fácil otimização, tendo sido ainda assim necessário o uso de uma biblioteca externa para manipulação de grandes inteiros.\\
 
 \indent Quanto ao segundo e terceiro, as operações matemáticas utilizadas na pseudocódigo são aquelas básicas de conjuntos, principalmente união, e assim constituem-se certas ineficiências inerentes às estruturas utilizadas pelo algoritmo. Em termos de memória, são gerados milhões de valores já para pequenos parâmetros, o que acaba explodindo seu uso. Sendo então necessário o uso de bastante memória virtual (armazenada no HDD), o desempenho do programa sofre significativamente.\\
-
 
 \indent 
 
