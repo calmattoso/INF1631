@@ -1,5 +1,6 @@
 #include <iostream>
 #include <deque>
+#include <cstdlib>
 
 #include "number.h"
 #include "combinatorics.h"
