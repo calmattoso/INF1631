@@ -25,7 +25,9 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
    * =========
    *
    *  Com 0 dígitos, é possível apenas o vetor vazio. Assim, basta
-   *    esvaziar (numbers).
+   *    esvaziar (numbers). O algoritmo contudo nunca chega neste 
+   *    ponto, a não ser que (n) inicial (da primeira chamada) já
+   *    seja 0. [ caso degenerado ]
    */
     if( n == 0 )
     {
@@ -54,15 +56,15 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
    *
    *  Queremos obter os números de (n) dígitos distintos, sendo (m) possíveis.
    *  Para cada número de (n - 1) dígitos obtidos até o momento, basta que
-   *    separemos tais números segundos quais dígitos eles **não tem**. Assim
+   *    separemos tais números segundo quais dígitos eles **não tem**. Assim
    *    teremos diferentes conjuntos dos quais fazem parte os números sem 1,
    *    sem 2, ..., sem m.
    *  Feito isso, para obtermos o conjunto dos números de (n) dígitos, basta 
    *    adicionarmos ao final de cada número de cada conjunto gerado acima o
-   *    respectivo dígito de tal conjunto. Por exemplo, no conjunto dos números
-   *    de (n - 1) dígitos que não tem (1), adicionamos (1) ao final de cada um
-   *    deles. Fazendo isto para todos os conjuntos teremos todos os números de 
-   *    (n) dígitos.
+   *    respectivo dígito que não existe em tal conjunto. Por exemplo, no 
+   *    conjunto dos números de (n - 1) dígitos que não tem (1), adicionamos
+   *    (1) ao final de cada um deles. Fazendo isto para todos os conjuntos
+   *    teremos todos os números de (n) dígitos.
    *  Como temos que saber de (n-1) utilizamos recursão, andando para trás até
    *    atingir-se o caso base.
    * !!! OBS !!!
@@ -70,7 +72,7 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
    *  Para fins de otimização, esta função ao invés de retornar o vetor com 
    *    números de (n) dígitos simplesmente os salva no atributo (numbers).
    *    Essencialmente, ao alterarmos (numbers) seguindo o algoritmo é como
-   *    se um retorno fosse feito.
+   *    se um retorno fosse feito ao final da função.
    *
    */
 
@@ -103,7 +105,7 @@ void Combinatorics::GenerateNumbers( ull n , ull m )
           for( unsigned int digit = 1 ; digit <= m ; ++digit )
           {
             /* 
-              O número (number) não tem o dígito ( digits[digit] ),
+              O número (number) não tem o dígito (digit),
                 logo, o adicionamos ao final
                 [ etada de concatenação do passo indutivo ] 
             */

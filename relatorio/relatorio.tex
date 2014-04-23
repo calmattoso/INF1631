@@ -178,7 +178,7 @@ function q(int x, int y, unsigned int k){
 
 \indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textbf{\textit{Python}} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x}, \textbf{y} e \textbf{k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
 
-\indent É importante ressaltar que em casos para os quais \textbf{x == y}, o algoritmo retornará valores diferentes dos esperados, apresentando comportamento não determinado. Contudo, dados o teorema enunciado e sua respectiva prova, não é incumbência do algoritmo desta derivado tratar tais casos. Assim, chamadas ao algoritmo devem ser feitas apenas para \textbf{x != y}.\\
+\indent É importante ressaltar que em casos para os quais \textbf{x == y}, o algoritmo retornará valores diferentes dos esperados, apresentando comportamento indesejado. Contudo, dados o teorema enunciado e sua respectiva prova, não é incumbência do algoritmo desta derivado tratar de tais casos. Assim, chamadas ao algoritmo devem ser feitas apenas para \textbf{x != y}.\\
 
 \indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:\\
 
@@ -321,7 +321,7 @@ m[ 20 ] k[ 4 ]
   [20][19][18][17]
 \end{lstlisting}
 
-\indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito.\\
+\indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito. Os dados da tabela encontram-se no arquivo \textbf{\textit{ex2-huge.log}}.\\
 
 \begin{tabular}{llll}
   \toprule
