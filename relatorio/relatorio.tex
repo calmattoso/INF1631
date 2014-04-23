@@ -125,11 +125,18 @@ Otimizações foram feitas desde que não obsfuscassem as induções que origina
 
 \section{Introdução}
 
-\lettrine[nindent=0em,lines=3]{N}os foram apresentados 3 teoremas para provar e implementar:
-\\\indent Para o primeiro teorema, a prova nos foi apresentada, restando apenas a codificação.
-\\\indent No segundo, primeiro enunciamos e provamos um teorema equivalente ao proposto, para então responder o que foi perguntado.
-\\\indent Provamos e implementamos o último teorema, sendo $k = 15$ o maior valor calculado.
-\\\indent Todos os algoritmos foram implementados em C++ , alguns com o uso de bibliotecas externas a fim de otimização.
+\lettrine[nindent=0em,lines=3]{A}presentou-se três problemas com o objetivo de desenvolver-se códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar-se o desempenho das implementações destes algoritmos com respeito ao tempo de CPU.\\
+
+É possível enunciar-se um teorema correspondente para cada um dos problemas descritos, o que permite descrever-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática, montar um algoritmo com base neles e apresentar dados a respeito do tempo de execução dos algoritmos para diversas instâncias. Dessa forma, dividiu-se cada um dos três problemas em três teoremas, cada um com seu enunciado, prova,  algoritmo resultate e comenários e resultados.\\
+
+As provas dos teoremas se baseiam principalmente no princípio de indução matemática de Peano, conforme escrito abaixo:\\
+
+Se $\phi$ é um predicado unário tal que: $\phi$(0) é verdade, epara todo número natural n, se $\phi$(n) é verdadeiro, então $\phi$(S(n)) também o é, então 2q$\phi$(n) é verdadeiro para todo número natural n.\\
+
+Assim, para provar-se um teorema para diversos valores em um domínio discreto, basta provar-se os chamados Teoremas de Caso Base, em que prova-se o teorema para valores específicos e usualmente de simples entendimento do domínio, assim como os Teoremas do Passo Indutivo, em que prova-se que caso o teorema seja verdade para algum valor do domínio, o teorema também será verdade para outros valores do domínio diferentes do da hipótese.\\
+
+Dessa forma, segue-se a desenvolvimento de cada um dos problemas solicitados.\\
+
 %------------------------------------------------
 
 \section{Teorema 1}
