@@ -1,0 +1,23 @@
+Algoritmo para encontrar a árvore geradora máxima de um grafo.
+
+Teorema 1 (K): Sabe-se encontrar a árvore de peso máximo de G=(V;E) que contém o vértice 1 e possui K vértices.
+
+Prova do Teorema por Indução no Número de Vértices (K):
+
+Teorema do Caso Base: 
+(Teorema 1 (K=1))
+
+1 vértice v_1.
+Àrvore geradora mínima: V'_1={v_1}, E'_1=Vazio.
+Peso da árvore geradora mínima: 0
+
+Teorema do Passo Indutivo:
+(Teorema 1(K) -> Teorema 1(K+1))
+
+Por hipótese indutiva conheço V'_k e E'_k.
+Se considerar a componente conexa A formada por V'_k e E'_k e subgrafo induzido B formado pelos
+vértices (V - V'_k), necessariamente a aresta de maior peso entre A e B estará na árvore
+geradora máxima.
+
+E'_(k+1) = E'_k U {argmax(Gama^+(V'_k))}
+V'_(k+1) = V'_k U {vértice que liga a aresta que foi adicionada}
