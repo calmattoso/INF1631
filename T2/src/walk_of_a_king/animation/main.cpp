@@ -1,6 +1,14 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <GL/glut.h>
+#include <string.h>
+
+#define STEP 1
 
 #define MINUS_INFINITY -1
+
+#define WIDTH 600
+#define HEIGHT 600
 
 #define NONE -2
 #define END -1
@@ -26,6 +34,117 @@ int starting_energy;
 
 int dim_x;
 int dim_y;
+
+int king_x=0;
+int king_y=0;
+int king_prize=0;
+int king_energy=0;
+
+bool casa_percorrida[8][8];
+
+void printWord(float px,float py,char* w)
+{
+	int size = strlen(w);
+	for(int i=0;i<size;i++)
+	{
+		glRasterPos2f(px+i*0.025 , py);
+		glutBitmapCharacter(GLUT_BITMAP_8_BY_13,w[i]);
+	}
+}
+
+void drawBoard()
+{
+	char word_custo[7] = "Custo:";
+	char word_premio[8] = "Premio:";
+	char word_energia[9] = "Energia:";
+	char custo_valor[30];
+	char premio_valor[30];
+	float step_x = 2.0/dim_x;
+	float step_y = 2.0/dim_y;
+
+	float x;
+	float y;
+	for(int ix=0;ix<dim_x;ix++)
+	{	
+		for(int iy=0;iy<dim_y;iy++)
+		{
+			x = step_x * ix - 1;
+			y = 1-(step_y * iy);
+
+			if(casa_percorrida[ix][iy])
+			{		
+				glColor3f(0.3,0.3,0.5);
+				glBegin(GL_QUADS);
+					glVertex2d(x,y);
+					glVertex2d(x+step_x,y);
+					glVertex2d(x+step_x,y-step_y);
+					glVertex2d(x,y-step_y);
+				glEnd();
+			}
+
+			glColor3f(1.0,1.0,1.0);
+			glBegin(GL_LINE_STRIP);
+				glVertex2d(x,y);
+				glVertex2d(x+step_x,y);
+				glVertex2d(x+step_x,y-step_y);
+				glVertex2d(x,y-step_y);
+			glEnd();
+			
+			glColor3f(1.0f, 1.0f, 1.0f);
+			printWord(x+0.01,y-0.05,word_custo);
+			sprintf(custo_valor, "%d", cost[ix][iy]);
+			glColor3f(1.0f, 0.0f, 0.0f);
+			printWord(x+0.01,y-0.10,custo_valor);
+			glColor3f(1.0f, 1.0f, 1.0f);
+			printWord(x+0.01,y-0.15,word_premio);
+			sprintf(premio_valor, "%d", prize[ix][iy]);
+			glColor3f(0.0f, 1.0f, 0.0f);
+			printWord(x+0.01,y-0.20,premio_valor);
+		}
+	}
+
+	x = step_x * king_x - 1;
+	y = 1-(step_y * king_y);
+
+	float x_mid = x+step_x/2.0;
+	float y_mid = y-step_y/2.0;
+
+	glColor3f(0.0,0.0,1.0);
+	glBegin(GL_TRIANGLES);
+		glVertex2d(x_mid+0.2,y_mid+0.2);
+		glVertex2d(x_mid+0.2,y_mid-0.2);
+		glVertex2d(x_mid,y_mid);
+	glEnd();
+	glBegin(GL_QUADS);
+		glVertex2d(x_mid+0.2,y_mid-0.15);
+		glVertex2d(x_mid+0.2,y_mid+0.15);
+		glVertex2d(x_mid+0.4,y_mid+0.15);
+		glVertex2d(x_mid+0.4,y_mid-0.15);
+	glEnd();
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	printWord(x_mid+0.12,y_mid+0.06,word_energia);
+
+	sprintf(custo_valor, "%d", king_energy);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	printWord(x_mid+0.12,y_mid+0.01,custo_valor);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	printWord(x_mid+0.12,y_mid-0.04,word_premio);
+
+	sprintf(premio_valor, "%d", king_prize);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	printWord(x_mid+0.12,y_mid-0.09,premio_valor);
+}
+
+void draw(void)
+{
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	drawBoard();
+	glFlush();
+}
+
 
 void printDirection(int direction)
 {
@@ -194,32 +313,50 @@ void printOutput()
 	printf("Stating Energy = %d\n",starting_energy);
 	printf("Energy Left = %d\n",starting_energy-energy_used);
 
+	for(int x=0;x<dim_x;x++)
+	{
+		for(int y=0;y<dim_y;y++)
+		{
+			casa_percorrida[x][y] = false;
+		}
+	}
+
 	int x=0;
 	int y=0;
 	int next_x;
 	int next_y;
 	int current_energy=energy_used;
+	king_energy = starting_energy;
+	king_prize = 0;
 	printf("Path Taken:\n");
 	while(path[x][y][current_energy]!=END && path[x][y][current_energy]!=NONE)
 	{
 		next_x= x + dx[path[x][y][current_energy]];
 		next_y= y + dy[path[x][y][current_energy]];
 
-		printf("(%d,%d) ",x+1,y+1);
-		printDirection(path[x][y][current_energy]);
-		printf("(%d,%d)\n",next_x+1,next_y+1);
+		printf("%d %d\n",x+1,y+1);
+
+		king_x=x;
+		king_y=y;
+		casa_percorrida[x][y]=true;
+		draw();
+		sleep(STEP);
+		king_energy-=cost[next_x][next_y];
+		king_prize+=prize[next_x][next_y];
 
 		current_energy -= cost[next_x][next_y];
 
 		x = next_x;
 		y = next_y;
 	}
-	printf("(%d,%d) ",x+1,y+1);
-	printDirection(path[x][y][current_energy]);
-	printf("\n\n");
+	printf("%d %d\n",x+1,y+1);
+	king_x=x;
+	king_y=y;
+	draw();
+	sleep(2*STEP);
 }
 
-int main(void)
+int runAlgorithm()
 {
 	int test_case = 0;
 	while(1)
@@ -231,9 +368,22 @@ int main(void)
 		scanf(" %d %d",&dim_x,&dim_y);
 
 		readCostAndPrizeInput();
+
 		walkOfAKing();
 		printf("Test Case Number %d:\n",test_case);
 		printOutput();
 	}
+	return 0;
+}
+
+int main(int argc, char **argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGBA|GLUT_SINGLE);
+	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(WIDTH,HEIGHT);
+	glOrtho(0,WIDTH,HEIGHT,0,0,10);
+	glutCreateWindow("Walk Of A King");
+	runAlgorithm();
 	return 0;
 }
