@@ -1,0 +1,21 @@
+BORUVKA
+
+Algoritmo para encontrar a árvore geradora máxima de um grafo.
+
+Teorema 1 (K): Sabe-se encontrar a árvore de peso máximo de G=(V;E) que os componentes conexos possuem pelo menos K vértices.
+
+Prova do Teorema por Indução no Número de Vértices dos Componentes Conexos (K):
+
+Teorema do Caso Base: 
+(Teorema 1 (K=1))
+
+1 vértice v_1.
+Componentes conexos = cada vértice do grafo.
+Para cada componente conexa: V'={v} e E' = Vazio
+Peso da floresta geradora mínima: 0
+
+Teorema do Passo Indutivo:
+(Teorema 1(K) -> Teorema 1(K+1))
+
+Para cada componente conexa formada por V'_k e E'_k, consideremos o subgrafo induzido B formado pelos vértices (V - V'_k). Necessariamente a aresta de maior peso entre A e B estará na floresta geradora máxima. As componentes resultantes possuirão
+pelo menos K+1 Vértices.

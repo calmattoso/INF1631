@@ -1,3 +1,5 @@
+PRIM
+
 Algoritmo para encontrar a árvore geradora máxima de um grafo.
 
 Teorema 1 (K): Sabe-se encontrar a árvore de peso máximo de G=(V;E) que contém o vértice 1 e possui K vértices.
