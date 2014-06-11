@@ -27,46 +27,6 @@ int starting_energy;
 int dim_x;
 int dim_y;
 
-void printDirection(int direction)
-{
-	switch(direction)
-	{
-		case NONE:
-			printf("[NONE] ");
-			break;
-		case END:
-			printf("[END] ");
-			break;
-		case UP_LEFT:
-			printf("[^<] ");
-			break;
-		case UP_MID:
-			printf("[^] ");
-			break;
-		case UP_RIGHT:
-			printf("[>^] ");
-			break;
-		case MID_LEFT:
-			printf("[<] ");
-			break;
-		case MID_RIGHT:
-			printf("[>] ");
-			break;
-		case BOT_LEFT:
-			printf("[V<] ");
-			break;
-		case BOT_MID:
-			printf("[V] ");
-			break;
-		case BOT_RIGHT:
-			printf("[>V] ");
-			break;
-		default:
-			printf("An error has occurred. ");
-			break;
-	}
-}
-
 int add(int x,int y)
 {
 	if( x == MINUS_INFINITY || y == MINUS_INFINITY )
@@ -192,6 +152,7 @@ void printOutput()
 	}
 	printf("Maximum Prize = %d\n",best_prize);
 	printf("Stating Energy = %d\n",starting_energy);
+	printf("Used Energy = %d\n",energy_used);
 	printf("Energy Left = %d\n",starting_energy-energy_used);
 
 	int x=0;
@@ -205,17 +166,14 @@ void printOutput()
 		next_x= x + dx[path[x][y][current_energy]];
 		next_y= y + dy[path[x][y][current_energy]];
 
-		printf("(%d,%d) ",x+1,y+1);
-		printDirection(path[x][y][current_energy]);
-		printf("(%d,%d)\n",next_x+1,next_y+1);
+		printf("%d %d\n",x+1,y+1);
 
 		current_energy -= cost[next_x][next_y];
 
 		x = next_x;
 		y = next_y;
 	}
-	printf("(%d,%d) ",x+1,y+1);
-	printDirection(path[x][y][current_energy]);
+	printf("%d %d\n",x+1,y+1);
 	printf("\n\n");
 }
 
