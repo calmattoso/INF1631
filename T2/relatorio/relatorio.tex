@@ -61,6 +61,7 @@
 
 \usepackage{color}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{listings}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -115,12 +116,11 @@
 
 \section{Introdução}
 
-\lettrine[nindent=0em,lines=3]{A}presentou-se três problemas com o objetivo de desenvolver-se códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar-se o desempenho das implementações destes algoritmos com respeito ao tempo de CPU.\\
+\lettrine[nindent=0em,lines=3]{A}presentou-se dois problemas com o objetivo de desenvolver-se códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar-se o desempenho das implementações destes algoritmos com respeito ao tempo de CPU.\\
 
 É possível enunciar-se um teorema correspondente para cada um dos problemas descritos, o que permite descrever-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática, montar um algoritmo com base neles e apresentar dados a respeito do tempo de execução dos algoritmos para diversas instâncias. Dessa forma, discriminamos para cada um dos três problemas seus teoremas correspondentes, cada um com seu enunciado, prova,  algoritmo resultate, comentários e resultados.\\
 
-Partindo da otimização com preenchimento de tabelas, o que seria conhecido como Programação Dinâmica, 
-
+As soluções apresentadas utilizam principalmente a indução, o reforço de hipótese e a técnica conhecida como preenchimento de tabelas ou programação dinâmica.
 %------------------------------------------------
 \newpage
 \section{Problema 1}
@@ -152,44 +152,6 @@ $E'_(k+1) = E'_k \cup {argmax(Gama^+(V'_k))}$\\
 $V'_(k+1) = V'_k \cup {vértice que liga a aresta que foi adicionada}$\\
 
 \subsection{ Algoritmo Resultante }
-\indent Com base na prova por indução, pode-se extrair o seguinte algoritmo para determinar Q[k], dados x, y e k.
-
-\begin{lstlisting}
-function q(int x, int y, unsigned int k){
- // Caso Base
-  if( k == 1 )
-    return 1
- // Passo Indutivo
-  else
-    return x^(k-1) + y * q(x , y , k-1)  
-}
-\end{lstlisting}
-
-\subsection{ Comentários }
-
-\indent O algoritmo funcionou como esperado para todos os valores testados. A fim de checar de certa forma a corretude do código, foi criado um programa em \textbf{\textit{Python}} para gerar em torno de quatro milhões de quocientes, para diferentes valores de \textbf{x}, \textbf{y} e \textbf{k}. Comparando-se com a saída de nossa implementação do algoritmo acima, constatou-se que os resultados foram idênticos.\\
-
-\indent É importante ressaltar que em casos para os quais \textbf{x == y}, o algoritmo retornará valores diferentes dos esperados, apresentando comportamento indesejado. Contudo, dados o teorema enunciado e sua respectiva prova, não é incumbência do algoritmo desta derivado tratar de tais casos. Assim, chamadas ao algoritmo devem ser feitas apenas para \textbf{x != y}.\\
-
-\indent Em anexo apresentamos o arquivo \textbf{\textit{ex1-small.log}} que mostra uma série de resultados de nossos testes. Alguns resultados:\\
-
-\begin{lstlisting}
-x = -25, y = -24, k=2
-  Quocient: -49
-
-x = -25, y = -24, k=24
-  Quocient: -2218977901950216804906539865046849
-
-x = 24, y = 23, k=24
-  Quocient: 853485012853782147658915715900735
-
-\end{lstlisting}
-
-\indent Finalmente, fizemos um teste com \textbf{364.500.000} iterações, aproximadamente, sendo o tempo total necessário de execução de \textbf{210.094s} ( disponível em \textbf{\textit{ex1-huge.log}} ), evidenciando quão otimizado encontra-se o código. As classes desenvolvidas apresentam um bom nível de otimização, armazenando valores relevantes para consultas futuras.\\
-
-\indent Como é necessário saber diferentes potências de \textbf{x}, a classe de exponenciação lembra-se das já calculadas. Além disso, como é necessário saber valores passados de quocientes, a classe que implementa o algoritmo lembra-se de quocientes passados (dados \textbf{x} e \textbf{y}).
-
-
 
 %------------------------------------------------
 \newpage
@@ -202,143 +164,10 @@ ponentes conexos possuem pelo menos K vértices.
 
 \subsection{ Prova }
 \indent 
-
-Define-se:\\
-$d_x$ := algarismo de valor absoluto x\\
-$N_{n,m}$ := $\{ x | $ $x=a_n \dots a_2a_1$ tal que $a_i \in \{d_1,d_2, \dots ,d_m\}$, o conjunto de dígitos$\}$ = números de n dígitos com dígitos com valor até m.\\
-
-Podemos enunciar o seguinte teorema, válido para todo n e m inteiros, tal que $n,m\geq1$:\\
-
-$\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ Sabe-se enumerar explicitamente os elementos do conjunto:\\
-$E_{n,m}$ = $\{ x | $ $x \in N_{n,m}$ e $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq n ((i \neq j) \rightarrow ( a_i \neq a_j ))$ = números de n dígitos com dígitos distintos com valor até m.\\
-
-\textbf{Prova por indução no parâmetro de indução (n):}\\
 \textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
-
-\textit{\textbf{Teorema 2 (0,m):} (Caso Degenerado)}\\
-$n=0 \rightarrow N_{0,m} = \emptyset$\\
-$E_{0,m} \subseteq N_{0,m} \rightarrow E_{0,m} = \emptyset $\\
-$E_{0,m}$ não possui elementos, logo podemos enumerar seus elementos como: \{\}\\
-
-\textit{\textbf{Teorema 2 (1,m):}}\\
-Na definição de $E_{1,m}$ como $1 \leq i,j \leq 1 \rightarrow i=j$ então $((i \neq j) \rightarrow ( a_i \neq a_j ))$ é sempre verdadeiro.\\
-Logo,  $E_{1,m} = N_{1,m} = \{d_1,d_2,\dots,d_m\}$\\
-Assim podemos enumerar os elementos de  $E_{1,m}$ explicitamente como: $\{d_1,d_2,\dots,d_m\}$.\\
-
-\textbf{Teorema do Passo Indutivo (em n):}\\
-\textit{\textbf{Teorema 2 (k,m) $\rightarrow$ Teorema 2 (k+1,m)}}\\
-Pela hipótese indutiva sabe-se enumerar explicitamente o conjunto $E_{k,m}$.\\
-Deseja-se enumerar explicitamente o conjunto  $E_{k+1,m}$ utilizando-se do fato de conhecer-se a enumeração de  $E_{k,m}$.\\
-
-Define-se:\\
-$E_{k,m}^{d_i} := \{ x | x \in E_{k,m}$ e todos os algarismos de x são diferente de $d_i$ $\}$\\
-
-Por construção $E_{k,m}^{d_i} \subset E_{k,m}$, logo sabe-se enumerar explicitamente os elementos de $E_{k,m}^{d_i}$ por hipótese indutiva.\\
-
-Façamos:\\
- $E_{k+1,m} = \bigcup_{\substack{ i \in \{1,2,\dots,m\}}} \{ x | x = y$ concatenado com $d_i, \forall y \in E_{k,m}^{d_i}  \}$\\
-
-Observar que $x \in N_{k+1,m}$ e que $\forall i,j \in \mathbb{N}, 1 \leq i,j \leq (k+1) ((i \neq j) \rightarrow ( a_i \neq a_j ))$ conforme desejado.\\
-
-
+\textbf{Teorema do Passo Indutivo:}\\
 \subsection{ Algoritmo Resultante }
-\indent 
-Com base na prova por indução em n do $\mathbf{Teorema}$ $\mathbf{2}$ $\mathbf{(n,m)}$ podemos construir o seguinte algoritmo:\\
-
-\noindent
-{\color[rgb]{0,0,1} Numeros} {\color[rgb]{0,0.5,0.5} geraNumeros}( {\color[rgb]{0,0,1} int} n, {\color[rgb]{0,0,1} int} m )\\
-\{\\
-\hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (n == 0)\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{0,m}$;\\
-\hspace*{10mm} $E_{0,m} = \emptyset$;\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $E_{0,m}$;\\
-\hspace*{5mm} \}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (n == 1)\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{1,m}$;\\
-\hspace*{10mm} $E_{1,m} = \{d_1,d_2,\dots,d_m\}$;\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $E_{1,m}$;\\
-\hspace*{5mm} \}\\
-\hspace*{5mm} {\color[rgb]{0,0.5,0}// Passo Indutivo}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} else}\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{n,m}$;\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Numeros} $E_{n-1,m}$;\\
-\hspace*{10mm} $E_{n-1,m} = {\color[rgb]{0,0.5,0.5} geraNumeros}(n-1,m)$;\\
-\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} i {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $m$ {\color[rgb]{0.7,0.3,0} by} 1)\\
-\hspace*{10mm} \{\\
-\hspace*{15mm} $E_{n-1,m}^{d_i} = E_{n-1,m}$ {\color[rgb]{0,0.5,0.5}sem elem. com} $d_i$\\
-\hspace*{15mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} y {\color[rgb]{0.7,0.3,0} in} $E_{n-1,m}^{d_i}$)\\
-\hspace*{15mm} \{\\
-\hspace*{20mm} {\color[rgb]{0,0.5,0.5} add} ({\color[rgb]{0,0.5,0.5} concatena}($y$,$d_i$)) {\color[rgb]{0,0.5,0.5} to} $E_{n,m}$;\\
-\hspace*{15mm} \}\\
-\hspace*{10mm} \}\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $E_{n,m}$;\\
-\hspace*{5mm} \}\\
-\}
-
 \subsection{ Comentários }
-\indent  Primeiro provamos o teorema de que sabe-se enumerar todos estes números. Depois, implementamos o algortimo resultante da prova, que enumera todos os m.(m-1)...(m - k + 1) números.\\
-
-\indent Nas saídas disponibilizadas, os diferentes números gerados são exibidos através da sequência de dígitos que os formam, sendo estes delimitados cada um por colchetes. Além disso, para cada instância de teste, à direita de \textbf{m} e \textbf{k} são apresentados seus valores, também estes delimitados por colchetes.\\
-
-\indent Em anexo disponibilizamos o arquivo \textbf{\textit{ex2-small.log}} que apresenta o resultado da execução do algortimo para \textbf{m} de \textbf{1 até 9} e \textbf{k} de \textbf{1 até 9}, possibilitando checar se a implementação funciona pelo menos para pequenos valores. Abaixo disponibilizamos um resultado para visualização.\\\\
-
-\begin{lstlisting}
-m[ 3 ] k[ 3 ]
-#numbers: 6
-
-[1][2][3]
-[1][3][2]
-[2][1][3]
-[2][3][1]
-[3][1][2]
-[3][2][1]
-\end{lstlisting}
-
-\indent Para valores de \textbf{m} maiores que 9, apresentamos alguns testes no arquivo \textbf{\textit{ex2-small-2.log}}. Abaixo, alguns resultados para o caso de m = 20 e k = 4:
-
-\begin{lstlisting}
-m[ 20 ] k[ 4 ]
-  #numbers: 116280
-  Trial time: 0s
-  [1][2][3][4]
-  [1][2][3][5]
-  [1][2][3][6]
-      ...
-  [20][19][18][15]
-  [20][19][18][16]
-  [20][19][18][17]
-\end{lstlisting}
-
-\indent Para maiores valores, conseguimos fazer nosso algoritmo funcionar de maneira satisfatória até \textbf{m = 17} e \textbf{k = 7}, como apresentado na tabela abaixo. Os tempos de execução para cada instância de teste são indicados na tabela, sendo o valor médio de \textbf{115.7529} segundos. Pode-se observar um crescimento considerável quando da adição de um novo dígito. Os dados da tabela encontram-se no arquivo \textbf{\textit{ex2-huge.log}}.\\
-
-\begin{tabular}{llll}
-  \toprule
-  \textbf{m}  &  \textbf{k} &   \textbf{\#numbers} &  \textbf{Time (s)} \\
-  \midrule
-  10 &  6 &   151200    &   0.203125  \\
-  10 &  7 &   604800    &   0.828125  \\
-  11 &  6 &   332640    &   0.421875  \\
-  11 &  7 &   1663200   &   2.3125    \\
-  12 &  6 &   665280    &   0.8125    \\
-  12 &  7 &   3991680   &   5.45312   \\
-  13 &  6 &   1235520   &   2.03125   \\
-  13 &  7 &   8648640   &   12.7656   \\
-  14 &  6 &   2162160   &   5.875     \\
-  14 &  7 &   17297280  &   66.4375   \\
-  15 &  6 &   3603600   &   16.2031   \\
-  15 &  7 &   32432400  &   216.891   \\
-  16 &  6 &   5765760   &   8.35938   \\
-  16 &  7 &   57657600  &   519.156   \\
-  17 &  6 &   8910720   &   16.0625   \\
-  17 &  7 &   98017920  &   978.234   \\
-  \bottomrule 
-\end{tabular}\\
-\newline\newline
-\indent O algoritmo implementado acaba necessitando de grandes quantidades de memória, o que acaba sendo um considerável gargalo em sua execução. Para os maiores casos apresentados abaixo, o algoritmo consumia em torno de \textbf{40GB}, fazendo uso principalmente de memória virtual montada no HDD, afetando seu desempenho.
 
 %-----------------------------------------------------------------------
 \newpage
@@ -352,169 +181,26 @@ posição do tabuleiro e a cada vez receber o prêmio e, naturalmente, consumir 
 $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(i,j,q)}$ Sabe-se determinar o prêmio máximo que o rei consegue coletar estando na posição (i,j) com q unidades restantes para consumir.\\
 
 \subsection{ Prova }
+Para obtermos um reforço de hipótese, reescrevemos da seguinte forma o teorema:
+
+$\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(x,y,q)}$ Sabe-se determinar o caminho de prêmio máximo que o rei consegue coletar estando na posição (x,y) com q unidades restantes para consumir.\\
+
 \indent 
 
 \textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
 
-\textit{\textbf{Teorema 3 (0):} (Caso Degenerado)}\\
-$ k=0 \rightarrow n=2^0=1$ equipe\\
-Conjunto de Equipes $E = \{e_1\}$\\
-Não há equipes suficiente para montar nenhum jogo. Como não é possível montar nenhum jogo, não é possível montar nenhuma rodada. Logo: 0 rodadas são possíveis de serem formadas.\\
-Conjunto de Rodadas $R^0 = \emptyset$\\
-Número de rodadas $= 1 = 2^0-1 = (n-1)$\\
-
-\textit{\textbf{Teorema 3 (1):}}\\
-$ k=1 \rightarrow n=2^1=2$ equipes\\
-Conjunto de Equipes $E = \{e_1,e_2\}$\\
-Há somente duas equipes. Logo, podemos montar o seguinte conjunto de rodadas:\\
-Conjunto de Rodadas $R^1 = \{R_1\}$\\
- $R^1_1 =\{(e_1,e_2)\}$\\
-Número de rodadas $= 1 = 2^1-1 = (n-1)$\\
-Com essa configuração de rodadas, $e_1$ joga com $e_2$, satisfazendo a condição de que cada time jogue com todos os outros.\\
+\textit{\textbf{Teorema 3 (0):}}\\
+Se $ (x,y)=(1,1) \rightarrow P_{max}(x,y,q) = 0$ e $caminho = \emptyset $\\
+Caso contrário $\rightarrow P_{max}(x,y,q) = -\infty $ e $caminho = \nexists $ pois não há como chegar em (1,1) \\ 
 
 \textbf{Teorema do Passo Indutivo:}\\
 
-\textit{\textbf{Teorema 3 (k) $\rightarrow$ Teorema 3 (k+1)}}\\
-Pela hipótese indutiva sabe-se construir o conjunto de rodadas $R^k$ para um número de equipes $n=2^k$.\\
-Deseja-se provar que sabe-se construir o conjunto de rodadas $R^{k+1}$ para um número de equipes $n'=2^{k+1}=2*2^k=2n$.\\
-Sejam o conjunto de equipes:\\
-$E = \{e_1,e_2,\dots,e_{2n}\}$\\
-Separemos dois subconjuntos de E:\\
-$E_1 = \{e_1,e_2,...,e_{n}\}$\\
-$E_2 = \{e_{n+1},e_{n+2},\dots,e_{2n}\}$\\
-Observe que:\\
-$card(E_1) = card(E_2) = n= 2^k$\\
-$E_1 \cup E_2 = E$\\
-$E_1 \cap E_2 = \emptyset$\\
-Pela hipótese indutiva, sabe-se construir as rodadas referentes a $E_1$ e $E_2$, uma vez que em cada time existem exatos $n=2^k$ equipes. Faltam apenas as partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$ \\
-Denotemos, respectivamente, o conjunto de rodadas relativos a $E_1$ e $E_2$ como $R^{k,{E_1}}$ e $R^{k,{E_2}}$ e cada rodada como $R_i^{k,{E_1}}$ e $R_j^{k,{E_2}}$ para $1 \leq i,j \leq (n-1)$.\\
-Montemos o conjunto de rodadas $R^{k+1}$ como $R^{k+1}=\{R_1^{k+1},R_2^{k+1},\dots,R_{2n-1}^{k+1}\}$ tal que:\\
-
-Primeiras n-1 rodadas (Partidas que ocorrem internamente entre equipes de $E_1$ e $E_2$):\\
- $R_i^{k+1} = R_i^{k,{E_1}} \cup R_i^{k,{E_2}}$ $ \forall i \in \mathbb{N},1 \leq i \leq (n-1)$\\
-
-Próximas n rodadas (partidas que envolvem uma equipe de $E_1$ com uma equipe de $E_2$):\\
-$R_{n+\tau}^{k+1} = \{ ( e_{1+((j+\tau)\%n)},e_{j+n}) \in \mathbb{E}^2 |  j \in \mathbb{N},1 \leq j \leq n$ $\}$ $ \forall \tau \in \mathbb{Z},0 \leq \tau \leq (n-1)$\\
-
-Observar que $e_{1+((j+\tau)\%n)} \in E_1$ e $e_{j+n} \in E_2$ para todos os valores de $j$ e $\tau$ nos limites estipulados.\\
-Notar ainda que dado um $j$, variando-se $\tau$ nos limites estipulados, têm-se que $e_{j+n} \in E_2$ joga com todos os elementos de $E_1$ e que variar $j$ nos limites estipulados equivale a percorrer-se os elementos de $E_2$.
-Uma vez que todo elemento de $E_1$ e $E_2$ jogou com os próprios elementos de seu respectivo conjunto assim como com todos os elemntos do outro conjunto e como $E_1 \cup E_2 = E$ então $R^{k+1}$ é um conjunto de rodadas que satisfaz o teorema. Observar que $card(R^{k+1}) = 2n-1$, conforme esperado. Sabe-se , portanto, construir o conjunto de rodadas $R^{k+1}$ para um número de equipes.\\
+\textit{\textbf{Teorema 3 (x,y,k) $\forall k < q \rightarrow$ Teorema 3 (k+1)}}\\
+$V = Vizinhos = \{(i-1,j-1),(i,j-1),(i+1,j-1),(i-1,j),(i+1,j),(i-1,j+1),(i,j+1),(i,j+1),(i+1,j+1)\}$\\
+$P_{max}(x,y,q) = max_{v \in V}\{Prêmio(v) + P_{max}(v,q-custo(v))\}$\\
 
 \subsection{ Algoritmo Resultante }
-\indent Com base na prova por indução em k do $\mathbf{Teorema}$ $\mathbf{3}$$\mathbf{(k)}$ podemos construir o seguinte algoritmo:\\
-\noindent
-{\color[rgb]{0,0,1} Rodadas} {\color[rgb]{0,0.5,0.5} geraRodadas}( {\color[rgb]{0,0,1} int} k, {\color[rgb]{0,0,1} Equipes} E )\\
-\{\\
-\hspace*{5mm} {\color[rgb]{0,0.5,0}// Casos Bases}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (k == 0)\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{0}$;\\
-\hspace*{10mm} $R^{0} = \emptyset$;\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return}  $R^{0}$;\\
-\hspace*{5mm} \}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} if} (k == 1)\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{1}$;\\
-\hspace*{10mm} $R_1^{1} = \{(e_1,e_2)\}$;\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $R^{1}$;\\
-\hspace*{5mm} \}\\
-\hspace*{5mm} {\color[rgb]{0,0.5,0}// Passo Indutivo}\\
-\hspace*{5mm} {\color[rgb]{0.7,0.3,0} else}\\
-\hspace*{5mm} \{\\
-\hspace*{10mm} {\color[rgb]{0,0,1} Rodadas} $R^{k}$;\\
-\hspace*{10mm} {\color[rgb]{0,0,1} int} $n=2^k$;\\
-\hspace*{10mm} $E_1 = \{e_1,e_2,\dots,e_{\frac{n}{2}}\}$;\\
-\hspace*{10mm} $E_2 = \{e_{{\frac{n}{2}}+1},e_{{\frac{n}{2}}+2},\dots,e_{n}\}$;\\
-\hspace*{10mm} $R^{k-1,{E_1}} = {\color[rgb]{0,0.5,0.5} geraRodadas}(k-1,E_1)$;\\
-\hspace*{10mm} $R^{k-1,{E_2}} = {\color[rgb]{0,0.5,0.5} geraRodadas}(k-1,E_2)$;\\
-\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} i {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
-\hspace*{10mm} \{\\
-\hspace*{15mm} $R_i^{k} = R_i^{k-1,{E_1}} \cup R_i^{k-1,{E_2}}$\\
-\hspace*{10mm} \}\\
-\hspace*{10mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} $\tau$ {\color[rgb]{0.7,0.3,0} from} 0 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
-\hspace*{10mm} \{\\
-\hspace*{15mm}  $ R_{{\frac{n}{2}}+\tau}^{k} = \emptyset;$\\
-\hspace*{15mm} {\color[rgb]{0.7,0.3,0} for}({\color[rgb]{0,0,1} int} $j$ {\color[rgb]{0.7,0.3,0} from} 1 {\color[rgb]{0.7,0.3,0} to} $({\frac{n}{2}}-1)$ {\color[rgb]{0.7,0.3,0} by} 1)\\
-\hspace*{15mm} \{\\
-\hspace*{20mm} {\color[rgb]{0,0.5,0.5} add} $ ( e_{1+((j+\tau)\%{\frac{n}{2}})},e_{j+{\frac{n}{2}}})$ {\color[rgb]{0,0.5,0.5} to} $ R_{{\frac{n}{2}}+\tau}^{k}$;\\
-\hspace*{15mm} \}\\
-\hspace*{10mm} \}\\
-\hspace*{10mm} {\color[rgb]{0.5,0,1} return} $R^{k}$;\\
-\hspace*{5mm} \}\\
-\}\\
 
-
-\subsection{ Comentários }
-\indent Utilizando o algoritmo a cima construímos um programa que gera as rodadas para $2^k$ equipes, uma vez dado um k. Testamos esse programa coletando informações sobre o tempo de execução para diversos valores de k. Abaixo, segue-se alguns dos principais resultados encontrados:\\
-
-{\color[rgb]{0,0,1}Results for k=0:}\\
-\hspace*{5mm} 1 teams.\\
-\hspace*{5mm} 0 rounds with 0 matches per round.\\
-\hspace*{5mm} 0 total number of matches.\\
-\hspace*{5mm} 3016214 runs in 5s\\
-\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}1.65771e-006s}\\
-{\color[rgb]{0,0.5,0}
-\hspace*{5mm} Rounds generated:\\
-}
-
-{\color[rgb]{0,0,1}Results for k=1:}\\
-\hspace*{5mm} 2 teams.\\
-\hspace*{5mm} 1 rounds with 1 matches per round.\\
-\hspace*{5mm} 1 total number of matches.\\
-\hspace*{5mm} 2012070 runs in 5s\\
-\hspace*{5mm} Average time per run:{\color[rgb]{0.7,0.3,0} 2.485e-006s}\\
-{\color[rgb]{0,0.5,0}
-\hspace*{5mm} Rounds generated:\\
-\hspace*{10mm} Round 1: \{(1,2)\}\\
-}
-
-{\color[rgb]{0,0,1}Results for k=2:}\\
-\hspace*{5mm} 4 teams.\\
-\hspace*{5mm} 3 rounds with 2 matches per round.\\
-\hspace*{5mm} 6 total number of matches.\\
-\hspace*{5mm} 1039078 runs in 5s\\
-\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}4.81196e-006s}\\
-{\color[rgb]{0,0.5,0}
-\hspace*{5mm} Rounds generated:\\
-\hspace*{10mm} Round 1: \{(1,2),(3,4)\}\\
-\hspace*{10mm} Round 2: \{(2,3),(1,4)\}\\
-\hspace*{10mm} Round 3: \{(1,3),(2,4)\}\\
-}
-
-{\color[rgb]{0,0,1}Results for k=3:}\\
-\hspace*{5mm} 8 teams.\\
-\hspace*{5mm} 7 rounds with 4 matches per round.\\
-\hspace*{5mm} 28 total number of matches.\\
-\hspace*{5mm} 461214 runs in 5s\\
-\hspace*{5mm} Average time per run: {\color[rgb]{0.7,0.3,0}1.0841e-005s}\\
-{\color[rgb]{0,0.5,0}
-\hspace*{5mm} Rounds generated:\\
-\hspace*{10mm} Round 1: \{(1,2),(3,4),(5,6),(7,8)\}\\
-\hspace*{10mm} Round 2: \{(2,3),(1,4),(6,7),(5,8)\}\\
-\hspace*{10mm} Round 3: \{(1,3),(2,4),(5,7),(6,8)\}\\
-\hspace*{10mm} Round 4: \{(2,5),(3,6),(4,7),(1,8)\}\\
-\hspace*{10mm} Round 5: \{(3,5),(4,6),(1,7),(2,8)\}\\
-\hspace*{10mm} Round 6: \{(4,5),(1,6),(2,7),(3,8)\}\\
-\hspace*{10mm} Round 7: \{(1,5),(2,6),(3,7),(4,8)\}\\
-}
-
-{\color[rgb]{0,0,1}Results for k=14:}\\
-\hspace*{5mm}16384 teams.\\
-\hspace*{5mm}16383 rounds with 8192 matches per round.\\
-\hspace*{5mm}134209536 total number of matches.\\
-\hspace*{5mm}1 runs in 55.2969s\\
-\hspace*{5mm}Average time per run: {\color[rgb]{0.7,0.3,0}55.2969s}\\
-
-{\color[rgb]{0,0,1}Results for k=15:}\\
-\hspace*{5mm}32768 teams.\\
-\hspace*{5mm}32767 rounds with 16384 matches per round.\\
-\hspace*{5mm}536854528 total number of matches.\\
-\hspace*{5mm}1 runs in 793.641s\\
-\hspace*{5mm}Average time per run: {\color[rgb]{0.7,0.3,0}793.641s}\\
-
-É de simples verificação que o programa baseado no algoritmo descrito gerou corretamente rodadas para valores de $k$ pequenos ($k \in \{0,1,2,3\}$). Porém, como o número de partidas cresce exponencialmente, para valores de k maiores que 3 não é prático avaliar diretamente a saída do programa manualmente.\\
-
-Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528 jogos) devido ambas falta de memória e tempo de execução alto. Uma vez que para k=15 levou-se aproximadamente 13 minutos para calcular-se a resposta (em comparação a aproximadamente 1 minuto necessário para k=14) é razoável estimar que para k=16 levaria-se algumas horas e para k=17 levaria-se mais de um dia. Além disso o programa possui um custo alto de memória devido ao alto número de partidas envolvidas. Para os últimos valores de k computados o uso de memória atingia valores maiores que 8GB.\\
 
 
 %-----------------------------------------------------------------------
@@ -522,11 +208,6 @@ Somente foi possível rodar o programa para $k \leq 15$ (um total de 536.854.528
 \section{Conclusão}
 \indent Todos os algoritmos resultantes das provas por indução conseguiram resolver os problemas apresentados. Contudo, para valores de seus respectivos parâmetros que produzam grandes resultados, todos os algoritmos acabaram pecando em termos de desempenho, principalmente em uso de memória.\\
 
-\indent O primeiro foi o mais eficiente e de mais fácil otimização, tendo sido ainda assim necessário o uso de uma biblioteca externa para manipulação de grandes inteiros.\\
-
-\indent Quanto ao segundo e terceiro, as operações matemáticas utilizadas na pseudocódigo são aquelas básicas de conjuntos, principalmente união, e assim constituem-se certas ineficiências inerentes às estruturas utilizadas pelo algoritmo. Em termos de memória, são gerados milhões de valores já para pequenos parâmetros, o que acaba explodindo seu uso. Sendo então necessário o uso de bastante memória virtual (armazenada no HDD), o desempenho do programa sofre significativamente.\\
-
-\indent 
 
 
 %-----------------------------------------------------
