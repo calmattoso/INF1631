@@ -15,7 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
 \documentclass[12pt]{article}
@@ -88,7 +88,7 @@
 }
 
 %----------------------------------------------------------------------------------------
-%	TITLE SECTION
+% TITLE SECTION
 %----------------------------------------------------------------------------------------
 
 \title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Prova, Implementação e Análise de Problemas Selecionados II}} % Article title
@@ -110,7 +110,7 @@
 
 
 %----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
+% ARTICLE CONTENTS
 %----------------------------------------------------------------------------------------
 
 %\begin{multicols}{1} % Two-column layout throughout the main article text
@@ -182,7 +182,7 @@ ulysses22 & 117266 & 5.000000 & 0.000043 \\
 \subsection{ Algoritmo Resultante }
 \begin{lstlisting}
 
-// Cada iteração adiciona um vértice na árvore
+// Cada iteracao adiciona um vertice na arvore
   for(int i=0;i<num_vertices;i++)
   {
     // Encontrar a aresta de maior peso
@@ -216,6 +216,8 @@ ulysses22 & 117266 & 5.000000 & 0.000043 \\
   }
   return tree;
 \end{lstlisting}
+
+\indent As imagens exibindo o funcionamento do algoritmo para uma determinada instância encontram-se na sua respectiva pasta (\textit{prim}), dentro da pasta base \textbf{src}. 
 
 
 %------------------------------------------------
@@ -273,15 +275,15 @@ usa13509  & 2 & 5.671875 & 2.835938 \\
   int number_of_conex_components = num_vertices;
   bool has_merged = true;
 
-  // Caso Base (Componentes Conexos de Um Vértice)
+  // Caso Base (Componentes Conexos de Um Vertice)
   for(int i=0;i < num_vertices;i++)
   {
     conex_component[i]=i;
   }
 
-  // Indução
+  // Inducao
 
-  // Assumindo um grafo conexo, quero rodar o algoritmo até sobrar 1 componente conexa
+  // Assumindo um grafo conexo, quero rodar o algoritmo ate sobrar 1 componente conexa
   while(has_merged)
   {
     has_merged = false;
@@ -319,8 +321,10 @@ usa13509  & 2 & 5.671875 & 2.835938 \\
         has_merged = true;
         forest[*num_edges_generated] = make_pair(origin_vertex,vertex_to_add);
         (*num_edges_generated)++;
-        int lowest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?conex_component[origin_vertex]:conex_component[vertex_to_add];
-        int highest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?conex_component[vertex_to_add]:conex_component[origin_vertex];
+        int lowest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?
+          conex_component[origin_vertex]:conex_component[vertex_to_add];
+        int highest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?
+          conex_component[vertex_to_add]:conex_component[origin_vertex];
 
         for(int vertex=0;vertex<num_vertices;vertex++)
         {
@@ -334,6 +338,8 @@ usa13509  & 2 & 5.671875 & 2.835938 \\
   }
   return forest;
 \end{lstlisting}
+
+\indent As imagens exibindo o funcionamento do algoritmo para uma determinada instância encontram-se na sua respectiva pasta (\textit{boruvka}), dentro da pasta base \textbf{src}. 
 
 %-----------------------------------------------------------------------
 \section{Problema 2}
@@ -454,6 +460,7 @@ void walkOfAKingInductiveStep(int x,int y,int energy)
 }
 \end{lstlisting}
 
+\indent Disponibilizamos em anexo uma implementação de um programa que exibe o percurso ideal do rei pelo tabuleiro, sendo atualizados o valor do prêmio obtido e a quantidade de energia após passar por cada posição. Além disso, na pasta do Walk of a King também apresentamos uma imagem com a ideia geral do funcionamento do algoritmo.\\
 
 
 %-----------------------------------------------------------------------
@@ -504,7 +511,7 @@ void walkOfAKingInductiveStep(int x,int y,int energy)
 %\lipsum[8] % Dummy text
 
 %----------------------------------------------------------------------------------------
-%	REFERENCE LIST
+% REFERENCE LIST
 %----------------------------------------------------------------------------------------
 
 %\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
