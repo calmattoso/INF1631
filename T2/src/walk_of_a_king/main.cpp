@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "../lib/CPUTimer/CPUTimer.h"
 
 #define MINUS_INFINITY -1
 
@@ -180,6 +181,8 @@ void printOutput()
 int main(void)
 {
 	int test_case = 0;
+	CPUTimer timer_total;
+	int total_runs = 0;
 	while(1)
 	{
 		scanf(" %d",&starting_energy);
@@ -189,9 +192,18 @@ int main(void)
 		scanf(" %d %d",&dim_x,&dim_y);
 
 		readCostAndPrizeInput();
-		walkOfAKing();
+		do
+		{
+			total_runs++;
+			timer_total.start();
+			walkOfAKing();
+			timer_total.stop();
+		}
+		while(timer_total.getCPUTotalSecs()<5.0f);
 		printf("Test Case Number %d:\n",test_case);
 		printOutput();
+		printf("%d runs generated in %f seconds: %f seconds/run.\n",total_runs,timer_total.getCPUTotalSecs(),timer_total.getCPUTotalSecs()/(float)total_runs);
+
 	}
 	return 0;
 }
