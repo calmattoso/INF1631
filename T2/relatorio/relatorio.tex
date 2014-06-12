@@ -18,7 +18,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[twoside]{article}
+\documentclass[12pt]{article}
 
 \usepackage[brazilian]{babel}
 \usepackage[utf8]{inputenc}
@@ -29,11 +29,11 @@
 
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\linespread{1.1} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
-\usepackage{multicol} % Used for the two-column layout of the document
+%\usepackage{multicol} % Used for the two-column layout of the document
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
 \usepackage{booktabs} % Horizontal rules in tables
 \usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
@@ -63,6 +63,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{listings}
+
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -112,17 +113,17 @@
 %	ARTICLE CONTENTS
 %----------------------------------------------------------------------------------------
 
-\begin{multicols}{2} % Two-column layout throughout the main article text
-
+%\begin{multicols}{1} % Two-column layout throughout the main article text
 \section{Introdução}
 
-\lettrine[nindent=0em,lines=3]{A}presentou-se dois problemas com o objetivo de desenvolver-se códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar-se o desempenho das implementações destes algoritmos com respeito ao tempo de CPU.\\
+\lettrine[nindent=0em,lines=3]{A}presentou-se dois problemas com o objetivo de desenvolver códigos com diferentes estruturas de dados e algoritmos para solucioná-los, assim como analisar o desempenho das implementações destes algoritmos com respeito ao tempo de CPU. Neste trabalho procuramos expandir os conhecimentos empregados no primeiro, explorando a aplicação de tais técnicas para algoritmos em grafos.\\
 
-É possível enunciar-se um teorema correspondente para cada um dos problemas descritos, o que permite descrever-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática, montar um algoritmo com base neles e apresentar dados a respeito do tempo de execução dos algoritmos para diversas instâncias. Dessa forma, discriminamos para cada um dos três problemas seus teoremas correspondentes, cada um com seu enunciado, prova,  algoritmo resultate, comentários e resultados.\\
+É possível enunciar um teorema correspondente para cada um dos problemas descritos, o que permite descrevê-los, demonstrar seu entendimento em detalhe, explicar sua fundamentação e justificar sua corretude através de uma prova por indução matemática. Com base nesta, desenvolvemos um algoritmo e apresentamos dados a respeito de seu tempo de execução e dos resultados produzidos para um conjunto de instâncias.\\
 
-As soluções apresentadas utilizam principalmente a indução, o reforço de hipótese e a técnica conhecida como preenchimento de tabelas ou programação dinâmica.
+Dessa forma, discriminamos para cada um dos três problemas seus teoremas correspondentes, cada um com seu enunciado, prova,  algoritmo resultate, comentários e resultados.\\
+
+As soluções apresentadas utilizam principalmente a indução, o reforço de hipótese e a técnica conhecida como preenchimento de tabelas ou programação dinâmica.\\
 %------------------------------------------------
-\newpage
 \section{Problema 1}
 
 \subsection{ Enunciado }
@@ -131,7 +132,7 @@ As soluções apresentadas utilizam principalmente a indução, o reforço de hi
 \subsection{ Prova }
 \indent A prova é feita por indução matemática utilizando o número de vértices como parâmetro de indução. O \textit{teorema 1} pode ser enunciado:\\
 
-\textit{\textbf{Teorema 1 (k):}} Sabe-se encontrar a árvore de peso máximo de $G=(V,E)$ que contém o vértice $1$ e possui $K$ vértices.\\
+\textit{\textbf{Teorema vértice que liga a are1 (k):}} Sabe-se encontrar a árvore de peso máximo de $G=(V,E)$ que contém o vértice $1$ e possui $K$ vértices.\\
 
 \textbf{Teorema do Caso Base:}\\
 
@@ -144,33 +145,150 @@ Peso da árvore geradora máxima: 0\\
 
 \textit{\textbf{Teorema 1 (k) $\rightarrow$ Teorema 1 (k+1)}}\\
 Por hipótese indutiva conheço $V'_k$ e $E'_k$.\\
-Se considerar a componente conexa A formada por $V'_k$ e $E'_k$ e o subgrafo induzido B formado pelos
-vértices ($V - V'_k$), necessariamente a aresta de maior peso entre A e B estará na árvore
-geradora máxima.\\
+Se considerar a componente conexa $A$ formada por $V'_k$ e $E'_k$ e o subgrafo induzido $B$ formado pelos
+vértices $\left(V - V'_k\right)$, necessariamente a aresta de maior peso entre $A$ e $B$ estará na árvore geradora máxima. As componentes resultantes possuirão
+pelo menos $k+1$ vértices.\\
 
-$E'_(k+1) = E'_k \cup {argmax(Gama^+(V'_k))}$\\
-$V'_(k+1) = V'_k \cup {vértice que liga a aresta que foi adicionada}$\\
+$E'_{(k+1)} = E'_k \cup {argmax(\Gamma^+(V'_k))}$\\
+$V'_{(k+1)} = V'_k \cup$ vértice que liga a aresta que foi adicionada\\
 
 \subsection{ Algoritmo Resultante }
+\begin{lstlisting}
+
+// Cada iteração adiciona um vértice na árvore
+  for(int i=0;i<num_vertices;i++)
+  {
+    // Encontrar a aresta de maior peso
+
+    for(int vertex=0; vertex < num_vertices; vertex++)
+    {
+      if(is_vertice_in_tree[vertex])
+      {
+        // Percorre todo grafo
+        for(int j=0;j < adjacency_list[vertex].size();j++)
+        {
+          if(edge_weight > max_weight && !is_vertice_in_tree[vertex_checked])
+          {
+            max_weight = edge_weight;
+            vertex_to_add = vertex_checked;
+            origin_vertex = vertex;
+          }
+        }
+      }
+      else
+      {
+        continue;
+      }
+    }
+    if(vertex_to_add == -1 || origin_vertex == -1)
+    {
+      break;
+    }
+    is_vertice_in_tree[vertex_to_add] = true;
+    tree[vertex_to_add] = origin_vertex;
+  }
+  return tree;
+\end{lstlisting}
+
 
 %------------------------------------------------
-\newpage
 \section{Problema 1 - Desafio}
 
 \subsection{ Enunciado }
-\indent $\mathbf{Teorema}$ $\mathbf{2}$ Sabe-se encontrar a floresta de peso mínimo de G = (V, E) onde os com-
+\indent $\mathbf{Teorema}$ $\mathbf{2}$ Sabe-se encontrar a floresta de peso mínimo de $G = (V, E)$ onde os com-
 ponentes conexos possuem pelo menos K vértices.
 
 
 \subsection{ Prova }
-\indent 
-\textbf{Teorema(s) do(s) Caso(s) Base(s):}\\
+
+\textbf{Teorema do Caso Base:}\\
+
+\textit{\textbf{Teorema 1 (1):}}\\
+Existe apenas um vértice $v_1$.
+Componentes conexos = cada vértice do grafo.
+Para cada componente conexa: $V'=\{v\}$ e $E' = \emptyset$
+Peso da floresta geradora mínima: 0\\
+
 \textbf{Teorema do Passo Indutivo:}\\
+
+\textit{\textbf{Teorema 1 (k) $\rightarrow$ Teorema 1 (k+1)}}\\
+Para cada componente conexa $a$ formada por um subconjunto de $V'_k$ e de $E'_k$, consideremos o subgrafo induzido $B$ formado pelos vértices $\left( V - V'_k \right)$. Necessariamente a aresta de menor peso entre $a$ e $B$ estará na floresta geradora mínima. As componentes resultantes possuirão
+pelo menos $k + 1$ Vértices.\\
+
+$E'_{(k+1)} = E'_k \cup {argmax(\Gamma^+(V'_k))}$\\
+$V'_{(k+1)} = V'_k \cup$ vértice que liga a aresta que foi adicionada\\
+
 \subsection{ Algoritmo Resultante }
-\subsection{ Comentários }
+\begin{lstlisting}
+  pair<int,int>* forest = new pair<int,int>[num_vertices-1];
+  *num_edges_generated = 0;
+  int* conex_component = new int[num_vertices];
+  int number_of_conex_components = num_vertices;
+  bool has_merged = true;
+
+  // Caso Base (Componentes Conexos de Um Vértice)
+  for(int i=0;i < num_vertices;i++)
+  {
+    conex_component[i]=i;
+  }
+
+  // Indução
+
+  // Assumindo um grafo conexo, quero rodar o algoritmo até sobrar 1 componente conexa
+  while(has_merged)
+  {
+    has_merged = false;
+    for(int k=0;k < number_of_conex_components;k++)
+    {
+      // Encontrar a aresta de maior peso
+      int min_weight = highest_weight_in_graph+1;
+      int vertex_to_add = -1;
+      int origin_vertex = -1;
+      for(int vertex=0;vertex<num_vertices;vertex++)
+      {
+        if(conex_component[vertex]==k)
+        {
+          // Percorre todo o grafo
+          for(int j=0;j < adjacency_list[vertex].size();j++)
+          {
+            int vertex_checked = adjacency_list[vertex][j].first;
+            float edge_weight = adjacency_list[vertex][j].second;
+
+            if(edge_weight<min_weight && conex_component[vertex_checked] != conex_component[vertex])
+            {
+              min_weight = edge_weight;
+              vertex_to_add = vertex_checked;
+              origin_vertex = vertex;
+            }
+          }
+        }
+        else
+        {
+          continue;
+        }
+      }
+      if(vertex_to_add != -1 && origin_vertex != -1)
+      {
+        has_merged = true;
+        forest[*num_edges_generated] = make_pair(origin_vertex,vertex_to_add);
+        (*num_edges_generated)++;
+        int lowest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?conex_component[origin_vertex]:conex_component[vertex_to_add];
+        int highest_con_comp = conex_component[origin_vertex]<conex_component[vertex_to_add]?conex_component[vertex_to_add]:conex_component[origin_vertex];
+
+        for(int vertex=0;vertex<num_vertices;vertex++)
+        {
+          if(conex_component[vertex]==highest_con_comp)
+          {
+            conex_component[vertex] = lowest_con_comp;
+          }
+        }
+      }
+    }
+  }
+  return forest;
+\end{lstlisting}
 
 %-----------------------------------------------------------------------
-\newpage
 \section{Problema 2}
 
 \subsection{ Enunciado }
@@ -196,11 +314,88 @@ Caso contrário $\rightarrow P_{max}(x,y,q) = -\infty $ e $caminho = \nexists $ 
 \textbf{Teorema do Passo Indutivo:}\\
 
 \textit{\textbf{Teorema 3 (x,y,k) $\forall k < q \rightarrow$ Teorema 3 (k+1)}}\\
-$V = Vizinhos = \{(i-1,j-1),(i,j-1),(i+1,j-1),(i-1,j),(i+1,j),(i-1,j+1),(i,j+1),(i,j+1),(i+1,j+1)\}$\\
+\\
+$V = Vizinhos = \{(i-1,j-1),(i,j-1),(i+1,j-1),(i-1,j),(i+1,j),(i-1,j+1),(i,j+1),(i,j+1),(i+1,j+1)\}$\\ 
+\\
 $P_{max}(x,y,q) = max_{v \in V}\{Prêmio(v) + P_{max}(v,q-custo(v))\}$\\
 
 \subsection{ Algoritmo Resultante }
 
+\begin{lstlisting}
+
+void walkOfAKing()
+  for(int energy=0;energy <= starting_energy;energy++)
+    for(int x=0;x<dim_x;x++)
+      for(int y=0;y<dim_y;y++)
+        if(energy==0)
+          walkOfAKingBaseCase(x,y,energy);
+        else
+          walkOfAKingInductiveStep(x,y,energy);
+\end{lstlisting}
+Caso base:
+\begin{lstlisting}
+void walkOfAKingBaseCase(int x,int y,int energy)
+{
+  if(x==0 && y==0)
+  {
+    max_prize[x][y][energy] = 0;
+    path[x][y][energy] = END;
+  }
+  else
+  {
+    max_prize[x][y][energy] = MINUS_INFINITY;
+    path[x][y][energy] = NONE;  
+  } 
+}
+\end{lstlisting}
+Passo Indutivo:
+\begin{lstlisting}
+
+void walkOfAKingInductiveStep(int x,int y,int energy)
+{
+  int max_prize_found_yet = MINUS_INFINITY;
+  int direction_of_max_prize = NONE;
+
+  int cell_x;
+  int cell_y;
+  int cell_prize;
+  int cell_cost;
+  int cell_max_prize;
+  for(int direction=UP_LEFT;direction<=BOT_RIGHT;direction++)
+  {
+    cell_x = x + dx[direction];
+    cell_y = y + dy[direction];
+
+    if(isOutOfBounds(cell_x,cell_y))
+    {
+      continue;
+    }
+
+    cell_prize = prize[cell_x][cell_y];
+    cell_cost = cost[cell_x][cell_y];
+
+    if(cell_cost > energy)
+    {
+      continue;
+    }
+
+    cell_max_prize = add(cell_prize,max_prize[cell_x][cell_y][energy-cell_cost]);
+
+    if(cell_max_prize > max_prize_found_yet)
+    {
+      max_prize_found_yet = cell_max_prize;
+      direction_of_max_prize = direction;
+    }
+  }
+
+  max_prize[x][y][energy] = max_prize_found_yet;
+  path[x][y][energy] = direction_of_max_prize;
+}
+\end{lstlisting}
+
+
+
+\subsection{ Comentários }
 
 
 %-----------------------------------------------------------------------
@@ -266,6 +461,6 @@ $P_{max}(x,y,q) = max_{v \in V}\{Prêmio(v) + P_{max}(v,q-custo(v))\}$\\
 
 %----------------------------------------------------------------------------------------
 
-\end{multicols}
+%\end{multicols}
 
 \end{document}
