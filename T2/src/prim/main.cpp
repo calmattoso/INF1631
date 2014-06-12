@@ -4,25 +4,28 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <math.h>
+#include "../lib/CPUTimer/CPUTimer.h"
+
 
 using namespace std;
 
 int lowest_weight_in_graph=99999;
 
-void printGraph(vector< pair<int,int> >* adjacency_list,int num_vertices)
+void printGraph(vector< pair<int,float> >* adjacency_list,float num_vertices)
 {
 	for(int vertex=0;vertex<num_vertices;vertex++)
 	{
 		int vertex_degree = adjacency_list[vertex].size();
 		for(int i=0;i<vertex_degree;i++)
 		{
-			printf("%d <-> %d [%d]\n",vertex,adjacency_list[vertex][i].first,adjacency_list[vertex][i].second);
+			printf("%d <-> %f [%f]\n",vertex,adjacency_list[vertex][i].first,adjacency_list[vertex][i].second);
 		}
 	}
 	return;
 }
 
-int* maximumGeneratingTree(vector< pair<int,int> >* adjacency_list,int num_vertices)
+int* maximumGeneratingTree(vector< pair<int,float> >* adjacency_list,int num_vertices)
 {
 	int* tree = new int[num_vertices];
 	bool* is_vertice_in_tree = new bool[num_vertices];
@@ -86,28 +89,33 @@ int* maximumGeneratingTree(vector< pair<int,int> >* adjacency_list,int num_verti
 	return tree;
 }
 
-vector< pair<int,int> >* readGraph(int* num_vertices,int* num_edges)
+vector< pair<int,float> >* readGraph(int* num_vertices,int* num_edges)
 {
-	scanf(" %d %d",num_vertices,num_edges);
-
-	vector< pair<int,int> >* adjacency_list = new vector< pair<int,int> >[*num_vertices];
-
-	int vertex_a,vertex_b;
-	int weight;
-	for(int i=0;i<*num_edges;i++)
+	int v,x,y;
+	vector<float> v_x;
+	vector<float> v_y;
+	while(scanf(" %f %f",&x,&y) == 2)
 	{
-		scanf(" %d %d %d",&vertex_a,&vertex_b,&weight);
-
-		if(weight<lowest_weight_in_graph)
-		{
-			lowest_weight_in_graph = weight;
-		} 
-
-		adjacency_list[vertex_a].push_back(make_pair(vertex_b,weight));
-
-		adjacency_list[vertex_b].push_back(make_pair(vertex_a,weight));
+		v_x.push_back(x);
+		v_y.push_back(y);
 	}
-
+	*num_vertices = v_x.size();
+	*num_edges = (*num_vertices)*(*num_vertices-1);
+	vector< pair<int,float> >* adjacency_list = new vector< pair<int,float> >[*num_vertices];
+	float distance;
+	for(int i=0;i<*num_vertices;i++)
+	{
+		for(int j=0;j<*num_vertices;j++)
+		{
+			distance = sqrt((v_x[j]-v_x[i])*(v_x[j]-v_x[i])+(v_y[j]-v_y[i])*(v_y[j]-v_y[i]));
+			adjacency_list[i].push_back(make_pair(j,distance));
+			adjacency_list[j].push_back(make_pair(i,distance));
+			if(distance>lowest_weight_in_graph)
+			{
+				distance = lowest_weight_in_graph;
+			}
+		}
+	}
 	return adjacency_list;
 }
 
@@ -116,19 +124,33 @@ int main(void)
 	int num_vertices;
 	int num_edges;
 
-	vector< pair<int,int> >* adjacency_list;
+	vector< pair<int,float> >* adjacency_list;
 	int* max_gen_tree;
+
+	CPUTimer timer_total;
+	int total_runs = 0;
 
 	adjacency_list = readGraph(&num_vertices,&num_edges);
 	printf("Original Adjacency List:\n");
 	printGraph(adjacency_list,num_vertices);
 
-	max_gen_tree = maximumGeneratingTree(adjacency_list,num_vertices);
+	do
+	{
+		total_runs++;
+		timer_total.start();
+		max_gen_tree = maximumGeneratingTree(adjacency_list,num_vertices);		
+		timer_total.stop();
+	}
+	while(timer_total.getCPUTotalSecs()<5.0f);
+
 	printf("Tree Generated:\n");
 	for(int i=0;i<num_vertices;i++)
 	{
 		printf("%d -> %d\n",i,max_gen_tree[i]);
 	}
+
+	printf("%d runs generated in %f seconds: %f seconds/run.\n",total_runs,timer_total.getCPUTotalSecs(),timer_total.getCPUTotalSecs()/(float)total_runs);
+
 
 	delete[] adjacency_list;
 	delete[] max_gen_tree;
