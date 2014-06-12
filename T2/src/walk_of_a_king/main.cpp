@@ -182,7 +182,6 @@ int main(void)
 {
 	int test_case = 0;
 	CPUTimer timer_total;
-	int total_runs = 0;
 	while(1)
 	{
 		scanf(" %d",&starting_energy);
@@ -192,6 +191,7 @@ int main(void)
 		scanf(" %d %d",&dim_x,&dim_y);
 
 		readCostAndPrizeInput();
+		int total_runs = 0;
 		do
 		{
 			total_runs++;

@@ -160,7 +160,25 @@ pelo menos $k+1$ vértices.\\
 
 $E'_{(k+1)} = E'_k \cup {argmax(\Gamma^+(V'_k))}$\\
 $V'_{(k+1)} = V'_k \cup$ vértice que liga a aresta que foi adicionada\\
+\subsection{ Resultados }
+\begin{tabular}{llll}
+  \toprule
+  \textbf{Entrada}  &  \textbf{Número de execuções} &   \textbf{Tempo total} &  \textbf{Tempo/execução} \\
+  \midrule
+att48     & 12926 & 5.000000 & 0.000387 \\
+bays29    & 44611 & 5.000000 & 0.000112 \\
+berlin52  & 10895 & 5.000000 & 0.000459 \\
+bier127   & 1011 & 5.000000 & 0.004946 \\
+dantzig42 & 19633 & 5.000000 & 0.000255 \\
+eil51     & 12616 & 5.000000 & 0.000396 \\
+eil76     & 4169 & 5.000000 & 0.001199 \\
+lin105    & 1402 & 5.000000 & 0.003566 \\
+lin318    & 74 & 5.031250 & 0.067990 \\
+ulysses16 & 269782 & 5.000000 & 0.000019 \\
+ulysses22 & 117266 & 5.000000 & 0.000043 \\
 
+  \bottomrule 
+\end{tabular}\\
 \subsection{ Algoritmo Resultante }
 \begin{lstlisting}
 
@@ -226,6 +244,26 @@ pelo menos $k + 1$ Vértices.\\
 
 $E'_{(k+1)} = E'_k \cup {argmax(\Gamma^+(V'_k))}$\\
 $V'_{(k+1)} = V'_k \cup$ vértice que liga a aresta que foi adicionada\\
+
+\subsection{ Resultados }
+\begin{tabular}{llll}
+  \toprule
+  \textbf{Entrada}  &  \textbf{Número de execuções} &   \textbf{Tempo total} &  \textbf{Tempo/execução} \\
+  \midrule
+att48     & 368306 & 5.000000 & 0.000014 \\
+bays29    & 953244 & 5.000000 & 0.000005 \\
+berlin52  & 318617 & 5.000000 & 0.000016 \\
+bier127   & 59383 & 5.000000 & 0.000084 \\
+dantzig42 & 463653 & 5.000000 & 0.000011 \\
+eil51     & 326307 & 5.000000 & 0.000015 \\
+eil76     & 158460 & 5.000000 & 0.000032 \\
+lin105    & 84935 & 5.000000 & 0.000059 \\
+lin318    & 9793 & 5.000000 & 0.000511 \\
+ulysses16 & 2563521 & 5.000000 & 0.000002 \\
+ulysses22 & 1526119 & 5.000000 & 0.000003 \\
+usa13509  & 2 & 5.671875 & 2.835938 \\
+  \bottomrule 
+\end{tabular}\\
 
 \subsection{ Algoritmo Resultante }
 \begin{lstlisting}
@@ -328,6 +366,20 @@ $V = Vizinhos = \{(i-1,j-1),(i,j-1),(i+1,j-1),(i-1,j),(i+1,j),(i-1,j+1),(i,j+1),
 \\
 $P_{max}(x,y,q) = max_{v \in V}\{Prêmio(v) + P_{max}(v,q-custo(v))\}$\\
 
+\subsection{ Resultados }
+\begin{tabular}{llll}
+  \toprule
+  \textbf{Caso de teste}  &  \textbf{Número de execuções} &   \textbf{Tempo total} &  \textbf{Tempo/execução} \\
+  \midrule
+1 & 65071  & 5.000310 & 0.000077 \\
+2 & 1  & 5.000310 & 5.000310 \\
+3 & 1  & 5.000310 & 5.000310 \\
+4 & 1  & 5.000310 & 5.000310 \\
+5 & 1  & 5.000310 & 5.000310 \\
+
+  \bottomrule 
+\end{tabular}\\
+
 \subsection{ Algoritmo Resultante }
 
 \begin{lstlisting}
@@ -402,9 +454,6 @@ void walkOfAKingInductiveStep(int x,int y,int energy)
 }
 \end{lstlisting}
 
-
-
-\subsection{ Comentários }
 
 
 %-----------------------------------------------------------------------
