@@ -172,8 +172,8 @@ int main(void)
 	int total_runs = 0;
 
 	adjacency_list = readGraph(&num_vertices,&num_edges);
-	//printf("Original Adjacency List:\n");
-	//printGraph(adjacency_list,num_vertices);
+	printf("Original Adjacency List:\n");
+	printGraph(adjacency_list,num_vertices);
 	do
 	{
 		total_runs++;
